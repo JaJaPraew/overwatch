@@ -95,13 +95,15 @@
             background-color: var(--bg-page);
             border: 2px solid transparent;
             border-radius: 20px;
-            padding: 15px 10px;
+            padding: 20px 10px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 140px; /* บังคับความสูงขั้นต่ำ ไม่ให้การ์ดแบน */
+            justify-content: center;
         }
 
         .hero-card:hover {
@@ -117,21 +119,36 @@
             transform: translateY(-5px);
         }
 
-        .hero-img {
+        /* กล่องใส่รูป หรือตัวอักษรแทนรูป */
+        .hero-avatar-box {
             width: 80px;
             height: 80px;
-            object-fit: cover;
-            object-position: top;
-            border-radius: 15px;
-            margin-bottom: 10px;
+            border-radius: 20px;
+            margin-bottom: 12px;
             background-color: #e2e8f0; 
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            font-family: 'Itim', cursive;
+            font-size: 2.5em;
+            color: #94a3b8;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            display: block; /* เริ่มต้นแสดงผลรูปปกติ */
         }
 
         .hero-name {
             font-family: 'Itim', cursive;
             color: var(--text-dark);
             font-size: 1.25em;
+            line-height: 1.2;
         }
 
         .hero-role {
@@ -185,14 +202,25 @@
             gap: 8px;
         }
 
-        .counter-img-mini {
+        .counter-avatar-mini {
             width: 24px;
             height: 24px;
             border-radius: 50%;
+            background-color: white;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            font-weight: bold;
+            overflow: hidden;
+        }
+
+        .counter-img-mini {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             object-position: top;
-            background-color: white;
-            padding: 2px;
         }
         
         .footer {
@@ -232,51 +260,51 @@
 </div>
 
 <script>
-    // URL ดึงรูปโดยตรงจากเซิร์ฟเวอร์หลักของ Blizzard
-    const imgBaseUrl = "https://d15f34w2p8l1cc.cloudfront.net/overwatch/3429c3947f63648ef570eb92711ac5dd/";
+    // ดึงรูปภาพจาก GitHub ที่มีคนรวบรวมรูปภาพไอคอนไว้ (มีความเสถียรสูงกว่า)
+    const imgBaseUrl = "https://raw.githubusercontent.com/overwatch-api/overwatch-api/master/src/assets/heroes/";
     
-    // ข้อมูลชื่อรูปภาพฮีโร่แต่ละตัว
-    const imgData = {
-        'D.Va': 'dva-001.png',
-        'Doomfist': 'doomfist-001.png',
-        'Orisa': 'orisa-001.png',
-        'Ramattra': 'ramattra-001.png',
-        'Reinhardt': 'reinhardt-001.png',
-        'Roadhog': 'roadhog-001.png',
-        'Sigma': 'sigma-001.png',
-        'Winston': 'winston-001.png',
-        'Wrecking Ball': 'wrecking-ball-001.png',
-        'Zarya': 'zarya-001.png',
-        'Mauga': 'mauga-001.png',
+    // ข้อมูลชื่อไฟล์รูปภาพ (เป็นชื่อภาษาอังกฤษตัวพิมพ์เล็กติดกัน)
+    const imgMap = {
+        'D.Va': 'dva',
+        'Doomfist': 'doomfist',
+        'Orisa': 'orisa',
+        'Ramattra': 'ramattra',
+        'Reinhardt': 'reinhardt',
+        'Roadhog': 'roadhog',
+        'Sigma': 'sigma',
+        'Winston': 'winston',
+        'Wrecking Ball': 'wrecking-ball',
+        'Zarya': 'zarya',
+        'Mauga': 'mauga',
         
-        'Tracer': 'tracer-001.png',
-        'Sojourn': 'sojourn-001.png',
-        'Soldier: 76': 'soldier-76-001.png',
-        'Cassidy': 'cassidy-001.png',
-        'Reaper': 'reaper-001.png',
-        'Pharah': 'pharah-001.png',
-        'Echo': 'echo-001.png',
-        'Sombra': 'sombra-001.png',
-        'Mei': 'mei-001.png',
-        'Junkrat': 'junkrat-001.png',
-        'Torbjörn': 'torbjorn-001.png',
-        'Hanzo': 'hanzo-001.png',
-        'Widowmaker': 'widowmaker-001.png',
-        'Ashe': 'ashe-001.png',
-        'Bastion': 'bastion-001.png',
-        'Symmetra': 'symmetra-001.png',
-        'Genji': 'genji-001.png',
+        'Tracer': 'tracer',
+        'Sojourn': 'sojourn',
+        'Soldier: 76': 'soldier-76',
+        'Cassidy': 'cassidy',
+        'Reaper': 'reaper',
+        'Pharah': 'pharah',
+        'Echo': 'echo',
+        'Sombra': 'sombra',
+        'Mei': 'mei',
+        'Junkrat': 'junkrat',
+        'Torbjörn': 'torbjorn',
+        'Hanzo': 'hanzo',
+        'Widowmaker': 'widowmaker',
+        'Ashe': 'ashe',
+        'Bastion': 'bastion',
+        'Symmetra': 'symmetra',
+        'Genji': 'genji',
         
-        'Ana': 'ana-001.png',
-        'Zenyatta': 'zenyatta-001.png',
-        'Brigitte': 'brigitte-001.png',
-        'Lifeweaver': 'lifeweaver-001.png',
-        'Kiriko': 'kiriko-001.png',
-        'Moira': 'moira-001.png',
-        'Illari': 'illari-001.png',
-        'Baptiste': 'baptiste-001.png',
-        'Lucio': 'lucio-001.png',
-        'Mercy': 'mercy-001.png'
+        'Ana': 'ana',
+        'Zenyatta': 'zenyatta',
+        'Brigitte': 'brigitte',
+        'Lifeweaver': 'lifeweaver',
+        'Kiriko': 'kiriko',
+        'Moira': 'moira',
+        'Illari': 'illari',
+        'Baptiste': 'baptiste',
+        'Lucio': 'lucio',
+        'Mercy': 'mercy'
     };
 
     const heroesData = [
@@ -310,11 +338,10 @@
     ];
 
     function getHeroImage(heroName) {
-        if(imgData[heroName]) {
-            // ใช้ลิงก์สำรองอีกชุดเพื่อให้ชัวร์ว่าโหลดติด
-            return `https://d1u1mce87gyfbn.cloudfront.net/hero/${heroName.toLowerCase().replace(/[\s:]/g, '-')}/hero-select-portrait.png`;
+        if(imgMap[heroName]) {
+            return `${imgBaseUrl}${imgMap[heroName]}/icon.png`;
         }
-        return 'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt6d289bfad18bd61c/62fc1d0f5ee7152069b2d8fb/Hero_Portrait.png';
+        return ''; // ปล่อยว่างถ้าไม่มีรูป
     }
 
     function renderHeroes(filterValue) {
@@ -332,9 +359,14 @@
             card.onclick = () => selectHero(hero.id);
             
             const imgSrc = getHeroImage(hero.name);
+            const firstLetter = hero.name.charAt(0);
             
+            // ถ้าโหลดรูปพัง (onerror) ให้ซ่อนรูป(display:none) แล้วจะเหลือแต่ตัวอักษรน่ารักๆ แทน
             card.innerHTML = `
-                <img src="${imgSrc}" alt="${hero.name}" class="hero-img" onerror="this.src='https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt6d289bfad18bd61c/62fc1d0f5ee7152069b2d8fb/Hero_Portrait.png'">
+                <div class="hero-avatar-box">
+                    ${firstLetter}
+                    <img src="${imgSrc}" alt="${hero.name}" class="hero-img" style="position:absolute; width:80px; height:80px;" onerror="this.style.display='none'">
+                </div>
                 <div class="hero-name">${hero.name}</div>
                 <div class="hero-role">${hero.role}</div>
             `;
@@ -360,9 +392,14 @@
         
         weakList.innerHTML = hero.counters.length ? hero.counters.map(name => {
             const imgSrc = getHeroImage(name);
+            const firstLetter = name.charAt(0);
+            
             return `
                 <div class="counter-tag">
-                    <img src="${imgSrc}" class="counter-img-mini" onerror="this.src='https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt6d289bfad18bd61c/62fc1d0f5ee7152069b2d8fb/Hero_Portrait.png'">
+                    <div class="counter-avatar-mini">
+                        ${firstLetter}
+                        <img src="${imgSrc}" class="counter-img-mini" style="position:absolute; width:24px; height:24px;" onerror="this.style.display='none'">
+                    </div>
                     ${name}
                 </div>`;
         }).join('') : '<div class="counter-tag">ไม่มีข้อมูลในตาราง</div>';
