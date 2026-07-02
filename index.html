@@ -3,134 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Overwatch 2 Counter Picker (Cute Blue)</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>OW2 Counters 💙</title>
+    <!-- นำเข้าฟอนต์ Itim และ Kanit จาก Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-            --card-bg: #ffffff;
-            --text-main: #334155;
-            --text-muted: #64748b;
-            --primary-blue: #38bdf8;
-            --primary-hover: #0ea5e9;
-            --win-color: #34d399;
-            --lose-color: #fb7185;
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+            --bg-page: #f2f5f9; 
+            --bg-card: #ffffff; 
+            --primary-blue: #93c5fd; 
+            --primary-hover: #7db6f8;
+            --text-dark: #334155;
+            --text-light: #94a3b8;
         }
 
         body {
+            /* ใช้ฟอนต์หลักเป็น Kanit เพื่อให้อ่านง่ายสำหรับข้อความทั่วไป */
             font-family: 'Kanit', sans-serif;
-            background: var(--bg-gradient);
-            color: var(--text-main);
+            background-color: var(--bg-page);
+            color: var(--text-dark);
             margin: 0;
-            padding: 20px;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
             min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .app-card {
+            background-color: var(--bg-card);
+            max-width: 900px;
+            width: 100%;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            text-align: center;
         }
 
         h1 {
-            text-align: center;
-            color: #0369a1;
-            font-weight: 600;
-            text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
+            /* เปลี่ยนหัวข้อเป็นฟอนต์ Itim */
+            font-family: 'Itim', cursive;
+            color: var(--text-dark);
+            font-size: 2.8em;
+            margin-bottom: 5px;
+            margin-top: 0;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: var(--text-light);
+            font-size: 0.95em;
             margin-bottom: 30px;
+            font-family: 'Kanit', sans-serif;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Filter Buttons */
         .filters {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             flex-wrap: wrap;
         }
 
         .filter-btn {
-            background-color: var(--card-bg);
-            color: var(--text-muted);
-            border: 2px solid transparent;
-            padding: 12px 25px;
+            /* เปลี่ยนปุ่มเป็นฟอนต์ Itim */
+            font-family: 'Itim', cursive;
+            background-color: var(--bg-page);
+            color: var(--text-light);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px; 
+            font-size: 1.2rem;
             cursor: pointer;
-            border-radius: 30px; /* ปุ่มโค้งมนน่ารัก */
-            font-weight: 600;
-            font-size: 1rem;
-            font-family: 'Kanit', sans-serif;
-            box-shadow: var(--shadow);
             transition: all 0.3s ease;
         }
 
         .filter-btn:hover {
-            transform: translateY(-2px);
-            color: var(--primary-hover);
+            background-color: #e2e8f0;
+            color: var(--text-dark);
         }
 
         .filter-btn.active {
             background-color: var(--primary-blue);
             color: white;
-            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
+            box-shadow: 0 4px 12px rgba(147, 197, 253, 0.5);
         }
 
-        /* Hero Grid */
         .hero-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 15px;
             margin-bottom: 40px;
         }
 
         .hero-card {
-            background-color: var(--card-bg);
-            border: 3px solid transparent;
+            background-color: var(--bg-page);
+            border: 2px solid transparent;
             border-radius: 20px;
-            padding: 20px 10px;
+            padding: 15px 10px;
             text-align: center;
             cursor: pointer;
-            box-shadow: var(--shadow);
-            transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease;
         }
 
         .hero-card:hover {
-            transform: scale(1.05);
+            transform: translateY(-3px);
             border-color: var(--primary-blue);
         }
 
         .hero-card.selected {
+            background-color: white;
             border-color: var(--primary-blue);
-            background-color: #f0f9ff;
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+            box-shadow: 0 8px 15px rgba(147, 197, 253, 0.2);
         }
 
         .hero-name {
-            font-weight: 600;
-            font-size: 1.1em;
-            color: #0f172a;
+            /* เปลี่ยนชื่อฮีโร่เป็นฟอนต์ Itim */
+            font-family: 'Itim', cursive;
+            color: var(--text-dark);
+            font-size: 1.25em;
         }
 
         .hero-role {
-            font-size: 0.85em;
-            color: var(--primary-blue);
-            margin-top: 5px;
-            background: #e0f2fe;
-            padding: 3px 8px;
-            border-radius: 12px;
-            display: inline-block;
+            font-size: 0.8em;
+            color: var(--text-light);
+            margin-top: 4px;
         }
 
-        /* Matchup Section */
         .matchup-container {
             display: none;
-            grid-template-columns: 1fr; /* ปรับให้เป็นแถวเดียวตอนเริ่มต้น */
-            gap: 20px;
+            background-color: var(--bg-page);
+            border-radius: 25px;
+            padding: 30px;
             animation: fadeIn 0.4s ease;
         }
 
         .matchup-container.active {
-            display: grid;
+            display: block;
         }
 
         @keyframes fadeIn {
@@ -138,189 +146,104 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .matchup-box {
-            padding: 25px;
-            border-radius: 25px;
-            background-color: var(--card-bg);
-            box-shadow: var(--shadow);
-        }
-
         .matchup-box h3 {
+            /* เปลี่ยนหัวข้อการแก้ทางเป็นฟอนต์ Itim */
+            font-family: 'Itim', cursive;
+            color: var(--text-dark);
             margin-top: 0;
-            text-align: center;
-            padding-bottom: 15px;
-            border-bottom: 2px dashed #cbd5e1;
-            font-size: 1.4em;
+            margin-bottom: 20px;
+            font-size: 1.5em;
         }
-
-        /* เน้นเฉพาะกล่องแก้ทาง (ตามตาราง) */
-        .weak-against h3 { color: var(--lose-color); }
 
         .counter-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
+            justify-content: center;
+            gap: 12px;
         }
 
         .counter-tag {
-            background-color: #f1f5f9;
-            color: #334155;
-            padding: 8px 15px;
-            border-radius: 15px;
-            font-weight: 600;
-            font-size: 1em;
-            border: 1px solid #e2e8f0;
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 10px 22px;
+            border-radius: 50px;
+            /* เปลี่ยนชื่อฮีโร่แก้ทางเป็นฟอนต์ Itim */
+            font-family: 'Itim', cursive;
+            font-size: 1.1em;
+            box-shadow: 0 4px 10px rgba(147, 197, 253, 0.4);
             display: flex;
             align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            gap: 8px;
         }
         
-        /* สีกรอบตามสายตัวละคร */
-        .tag-tank { border-left: 4px solid #38bdf8; }
-        .tag-dps { border-left: 4px solid #fb7185; }
-        .tag-supp { border-left: 4px solid #34d399; }
+        .footer {
+            margin-top: 40px;
+            font-size: 0.85em;
+            color: #cbd5e1;
+            font-family: 'Kanit', sans-serif;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>💙 OW2 Counters (SEA Meta) 💙</h1>
+<div class="app-card">
+    <h1>OW2 Counter Picker 💙</h1>
+    <div class="subtitle">เช็คตัวแก้ทางแพทช์ล่าสุด (SEA Meta)</div>
     
     <div class="filters" id="filters">
         <button class="filter-btn active" onclick="filterHeroes('All')">ทั้งหมด</button>
-        <button class="filter-btn" onclick="filterHeroes('Tank')">แทงค์ (Tank)</button>
-        <button class="filter-btn" onclick="filterHeroes('Damage')">ดาเมจ (DPS)</button>
+        <button class="filter-btn" onclick="filterHeroes('Tank')">Tank</button>
+        <button class="filter-btn" onclick="filterHeroes('Damage')">Damage</button>
     </div>
 
     <div class="hero-grid" id="heroGrid">
-        </div>
+        <!-- ตัวละครจะถูกสร้างที่นี่ -->
+    </div>
 
     <div class="matchup-container" id="matchupContainer">
-        <div class="matchup-box weak-against">
-            <h3>💥 ตัวที่ใช้แก้ทาง (Countered By)</h3>
+        <div class="matchup-box">
+            <h3>🎮 ควรหยิบตัวอะไรมาแก้ทางดี?</h3>
             <div class="counter-grid" id="weakList"></div>
         </div>
+    </div>
+    
+    <div class="footer">
+        © 2026 OW2 Counters. All rights reserved.
     </div>
 </div>
 
 <script>
-    // ข้อมูลที่แกะมาจากตารางรูปภาพ (จัดกลุ่ม Tank และ DPS)
+    // ข้อมูลอัพเดตล่าสุด
     const heroesData = [
-        // --- TANK ---
-        {
-            id: 'dva', name: 'D.Va', role: 'Tank',
-            counters: ['Zarya', 'Roadhog', 'Symmetra', 'Mei', 'Sombra', 'Brigitte']
-        },
-        {
-            id: 'doomfist', name: 'Doomfist', role: 'Tank',
-            counters: ['Orisa', 'Roadhog', 'Zarya', 'Cassidy', 'Sombra', 'Junkrat', 'Mei', 'Ana', 'Brigitte']
-        },
-        {
-            id: 'orisa', name: 'Orisa', role: 'Tank',
-            counters: ['Zarya', 'Roadhog', 'Symmetra', 'Bastion', 'Echo', 'Zenyatta']
-        },
-        {
-            id: 'ramattra', name: 'Ramattra', role: 'Tank',
-            counters: ['Orisa', 'Zarya', 'Mauga', 'Bastion', 'Mei', 'Ana', 'Zenyatta']
-        },
-        {
-            id: 'reinhardt', name: 'Reinhardt', role: 'Tank',
-            counters: ['Ramattra', 'Orisa', 'Bastion', 'Pharah', 'Mei', 'Junkrat', 'Symmetra', 'Sombra']
-        },
-        {
-            id: 'roadhog', name: 'Roadhog', role: 'Tank',
-            counters: ['Zarya', 'Mauga', 'Orisa', 'Ana', 'Zenyatta', 'Reaper', 'Mei', 'Sombra']
-        },
-        {
-            id: 'sigma', name: 'Sigma', role: 'Tank',
-            counters: ['Reinhardt', 'Ramattra', 'Winston', 'Zarya', 'Symmetra', 'Mei', 'Sombra']
-        },
-        {
-            id: 'winston', name: 'Winston', role: 'Tank',
-            counters: ['D.Va', 'Roadhog', 'Mauga', 'Reaper', 'Bastion', 'Torbjorn', 'Brigitte']
-        },
-        {
-            id: 'wreckingball', name: 'Wrecking Ball', role: 'Tank',
-            counters: ['Roadhog', 'Mauga', 'Sombra', 'Mei', 'Cassidy', 'Brigitte']
-        },
-        {
-            id: 'zarya', name: 'Zarya', role: 'Tank',
-            counters: ['Reinhardt', 'Ramattra', 'Winston', 'Bastion', 'Pharah', 'Widowmaker', 'Lifeweaver']
-        },
-        
-        // --- DAMAGE (DPS) ---
-        {
-            id: 'tracer', name: 'Tracer', role: 'Damage',
-            counters: ['Zarya', 'Cassidy', 'Echo', 'Pharah', 'Reaper', 'Sombra', 'Brigitte']
-        },
-        {
-            id: 'sojourn', name: 'Sojourn', role: 'Damage',
-            counters: ['Zarya', 'Winston', 'D.Va', 'Doomfist']
-        },
-        {
-            id: 'soldier76', name: 'Soldier: 76', role: 'Damage',
-            counters: ['Winston', 'D.Va', 'Tracer', 'Cassidy', 'Pharah', 'Reaper']
-        },
-        {
-            id: 'cassidy', name: 'Cassidy', role: 'Damage',
-            counters: ['Zarya', 'D.Va', 'Ashe', 'Widowmaker', 'Hanzo']
-        },
-        {
-            id: 'reaper', name: 'Reaper', role: 'Damage',
-            counters: ['Zarya', 'D.Va', 'Winston', 'Pharah', 'Echo', 'Widowmaker', 'Hanzo']
-        },
-        {
-            id: 'pharah', name: 'Pharah', role: 'Damage',
-            counters: ['D.Va', 'Winston', 'Soldier: 76', 'Cassidy', 'Ashe', 'Widowmaker', 'Echo']
-        },
-        {
-            id: 'echo', name: 'Echo', role: 'Damage',
-            counters: ['D.Va', 'Soldier: 76', 'Cassidy', 'Ashe', 'Widowmaker', 'Sombra']
-        },
-        {
-            id: 'sombra', name: 'Sombra', role: 'Damage',
-            counters: ['Winston', 'Zarya', 'Mei', 'Pharah', 'Hanzo', 'Kiriko', 'Brigitte']
-        },
-        {
-            id: 'mei', name: 'Mei', role: 'Damage',
-            counters: ['Pharah', 'Echo', 'Widowmaker', 'Hanzo', 'Ashe']
-        },
-        {
-            id: 'junkrat', name: 'Junkrat', role: 'Damage',
-            counters: ['Pharah', 'Echo', 'Widowmaker', 'Ashe', 'Soldier: 76']
-        },
-        {
-            id: 'torbjorn', name: 'Torbjörn', role: 'Damage',
-            counters: ['Pharah', 'Echo', 'Junkrat', 'Widowmaker', 'Hanzo']
-        },
-        {
-            id: 'hanzo', name: 'Hanzo', role: 'Damage',
-            counters: ['D.Va', 'Winston', 'Tracer', 'Genji', 'Sombra', 'Pharah']
-        },
-        {
-            id: 'widowmaker', name: 'Widowmaker', role: 'Damage',
-            counters: ['Winston', 'D.Va', 'Wrecking Ball', 'Tracer', 'Genji', 'Sombra']
-        },
-        {
-            id: 'ashe', name: 'Ashe', role: 'Damage',
-            counters: ['Winston', 'D.Va', 'Widowmaker', 'Tracer', 'Genji']
-        },
-        {
-            id: 'bastion', name: 'Bastion', role: 'Damage',
-            counters: ['Genji', 'Sigma', 'D.Va', 'Hanzo', 'Ana', 'Sombra']
-        },
-        {
-            id: 'symmetra', name: 'Symmetra', role: 'Damage',
-            counters: ['Winston', 'Pharah', 'Echo', 'Junkrat', 'Widowmaker']
-        },
-        {
-            id: 'genji', name: 'Genji', role: 'Damage',
-            counters: ['Winston', 'Zarya', 'Symmetra', 'Mei', 'Moira', 'Pharah']
-        }
+        { id: 'dva', name: 'D.Va', role: 'Tank', counters: ['Zarya', 'Roadhog', 'Symmetra', 'Mei', 'Sombra', 'Brigitte'] },
+        { id: 'doomfist', name: 'Doomfist', role: 'Tank', counters: ['Orisa', 'Roadhog', 'Zarya', 'Cassidy', 'Sombra', 'Junkrat', 'Mei', 'Ana', 'Brigitte'] },
+        { id: 'orisa', name: 'Orisa', role: 'Tank', counters: ['Zarya', 'Roadhog', 'Symmetra', 'Bastion', 'Echo', 'Zenyatta'] },
+        { id: 'ramattra', name: 'Ramattra', role: 'Tank', counters: ['Orisa', 'Zarya', 'Mauga', 'Bastion', 'Mei', 'Ana', 'Zenyatta'] },
+        { id: 'reinhardt', name: 'Reinhardt', role: 'Tank', counters: ['Ramattra', 'Orisa', 'Bastion', 'Pharah', 'Mei', 'Junkrat', 'Symmetra', 'Sombra'] },
+        { id: 'roadhog', name: 'Roadhog', role: 'Tank', counters: ['Zarya', 'Mauga', 'Orisa', 'Ana', 'Zenyatta', 'Reaper', 'Mei', 'Sombra'] },
+        { id: 'sigma', name: 'Sigma', role: 'Tank', counters: ['Reinhardt', 'Ramattra', 'Winston', 'Zarya', 'Symmetra', 'Mei', 'Sombra'] },
+        { id: 'winston', name: 'Winston', role: 'Tank', counters: ['D.Va', 'Roadhog', 'Mauga', 'Reaper', 'Bastion', 'Torbjorn', 'Brigitte'] },
+        { id: 'wreckingball', name: 'Wrecking Ball', role: 'Tank', counters: ['Roadhog', 'Mauga', 'Sombra', 'Mei', 'Cassidy', 'Brigitte'] },
+        { id: 'zarya', name: 'Zarya', role: 'Tank', counters: ['Reinhardt', 'Ramattra', 'Winston', 'Bastion', 'Pharah', 'Widowmaker', 'Lifeweaver'] },
+        { id: 'tracer', name: 'Tracer', role: 'Damage', counters: ['Zarya', 'Cassidy', 'Echo', 'Pharah', 'Reaper', 'Sombra', 'Brigitte'] },
+        { id: 'sojourn', name: 'Sojourn', role: 'Damage', counters: ['Zarya', 'Winston', 'D.Va', 'Doomfist'] },
+        { id: 'soldier76', name: 'Soldier: 76', role: 'Damage', counters: ['Winston', 'D.Va', 'Tracer', 'Cassidy', 'Pharah', 'Reaper'] },
+        { id: 'cassidy', name: 'Cassidy', role: 'Damage', counters: ['Zarya', 'D.Va', 'Ashe', 'Widowmaker', 'Hanzo'] },
+        { id: 'reaper', name: 'Reaper', role: 'Damage', counters: ['Zarya', 'D.Va', 'Winston', 'Pharah', 'Echo', 'Widowmaker', 'Hanzo'] },
+        { id: 'pharah', name: 'Pharah', role: 'Damage', counters: ['D.Va', 'Winston', 'Soldier: 76', 'Cassidy', 'Ashe', 'Widowmaker', 'Echo'] },
+        { id: 'echo', name: 'Echo', role: 'Damage', counters: ['D.Va', 'Soldier: 76', 'Cassidy', 'Ashe', 'Widowmaker', 'Sombra'] },
+        { id: 'sombra', name: 'Sombra', role: 'Damage', counters: ['Winston', 'Zarya', 'Mei', 'Pharah', 'Hanzo', 'Kiriko', 'Brigitte'] },
+        { id: 'mei', name: 'Mei', role: 'Damage', counters: ['Pharah', 'Echo', 'Widowmaker', 'Hanzo', 'Ashe'] },
+        { id: 'junkrat', name: 'Junkrat', role: 'Damage', counters: ['Pharah', 'Echo', 'Widowmaker', 'Ashe', 'Soldier: 76'] },
+        { id: 'torbjorn', name: 'Torbjörn', role: 'Damage', counters: ['Pharah', 'Echo', 'Junkrat', 'Widowmaker', 'Hanzo'] },
+        { id: 'hanzo', name: 'Hanzo', role: 'Damage', counters: ['D.Va', 'Winston', 'Tracer', 'Genji', 'Sombra', 'Pharah'] },
+        { id: 'widowmaker', name: 'Widowmaker', role: 'Damage', counters: ['Winston', 'D.Va', 'Wrecking Ball', 'Tracer', 'Genji', 'Sombra'] },
+        { id: 'ashe', name: 'Ashe', role: 'Damage', counters: ['Winston', 'D.Va', 'Widowmaker', 'Tracer', 'Genji'] },
+        { id: 'bastion', name: 'Bastion', role: 'Damage', counters: ['Genji', 'Sigma', 'D.Va', 'Hanzo', 'Ana', 'Sombra'] },
+        { id: 'symmetra', name: 'Symmetra', role: 'Damage', counters: ['Winston', 'Pharah', 'Echo', 'Junkrat', 'Widowmaker'] },
+        { id: 'genji', name: 'Genji', role: 'Damage', counters: ['Winston', 'Zarya', 'Symmetra', 'Mei', 'Moira', 'Pharah'] }
     ];
 
-    // ฟังก์ชันสร้างรายการฮีโร่บนหน้าเว็บ
     function renderHeroes(filterValue) {
         const grid = document.getElementById('heroGrid');
         grid.innerHTML = ''; 
@@ -343,7 +266,6 @@
         });
     }
 
-    // ฟังก์ชันจัดการปุ่ม Filter
     function filterHeroes(role) {
         document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
         event.target.classList.add('active');
@@ -351,7 +273,6 @@
         renderHeroes(role);
     }
 
-    // ฟังก์ชันเมื่อคลิกเลือกฮีโร่
     function selectHero(id) {
         document.querySelectorAll('.hero-card').forEach(card => card.classList.remove('selected'));
         document.getElementById(`hero-${id}`).classList.add('selected');
@@ -361,20 +282,13 @@
 
         const weakList = document.getElementById('weakList');
         
-        // สร้าง Tag รายชื่อฮีโร่ที่แก้ทาง
         weakList.innerHTML = hero.counters.length ? hero.counters.map(name => {
-            // สุ่มสี Tag คร่าวๆ เพื่อความสวยงาม (สามารถเขียนลอจิกเช็ค Role จริงๆ ได้)
-            const isTank = ['D.Va', 'Winston', 'Zarya', 'Roadhog', 'Orisa', 'Sigma'].includes(name);
-            const isSupp = ['Ana', 'Zenyatta', 'Brigitte', 'Moira', 'Kiriko', 'Lifeweaver'].includes(name);
-            const tagClass = isTank ? 'tag-tank' : (isSupp ? 'tag-supp' : 'tag-dps');
-            
-            return `<div class="counter-tag ${tagClass}">🎯 ${name}</div>`;
+            return `<div class="counter-tag">🎯 ${name}</div>`;
         }).join('') : '<div class="counter-tag">ไม่มีข้อมูลในตาราง</div>';
 
         document.getElementById('matchupContainer').classList.add('active');
     }
 
-    // โหลดครั้งแรก
     renderHeroes('All');
 </script>
 
