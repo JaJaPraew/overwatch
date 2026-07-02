@@ -179,22 +179,143 @@
 <script>
     // ฐานข้อมูลฮีโร่จำลอง (อัปเดตข้อมูลปี 2026)
     const heroesData = [
+        // --- TANK ---
         {
             id: 'dva', name: 'D.Va', role: 'Tank',
             strong: [
-                { name: 'Winston', reason: 'ปืนลูกซองยิงหัวและทำดาเมจระยะประชิดได้รุนแรงกว่า' },
-                { name: 'Pharah', reason: 'บินตามไปเก็บกลางอากาศได้ และ Defense Matrix ลบจรวดทิ้งหมด' },
-                { name: 'Freja', reason: 'ใช้ Mobility พุ่งเข้าประชิดตัวเพื่อตัดระยะทำการของ Freja ได้' }
+                { name: 'Winston', reason: 'ปืนลูกซองทำดาเมจจ่อหัววินสตันได้แรงกว่า' },
+                { name: 'Pharah', reason: 'Defense Matrix ลบจรวดได้ และบินตามไปกดดันกลางอากาศได้' }
             ],
             weak: [
                 { name: 'Zarya', reason: 'ปืนลำแสง (Beam) ยิงทะลุ Defense Matrix ได้ 100%' },
-                { name: 'Mei', reason: 'ปืนสเปรย์แช่แข็งทะลุ Matrix และสร้างความน่ารำคาญให้ D.Va มาก' }
+                { name: 'Symmetra', reason: 'ป้อมปืนและปืนลำแสงทะลุเกราะได้ดี' }
+            ]
+        },
+        {
+            id: 'doomfist', name: 'Doomfist', role: 'Tank',
+            strong: [
+                { name: 'Widowmaker', reason: 'มี Mobility พุ่งเข้าไปหาถึงที่ได้ไว' },
+                { name: 'Zenyatta', reason: 'Zen ไม่มีสกิลหนี ทำให้โดนคอมโบชุดเดียวตายได้' }
+            ],
+            weak: [
+                { name: 'Sombra', reason: 'โดนแฮ็กแล้วหมดความคล่องตัว กลายเป็นเป้านิ่ง' },
+                { name: 'Orisa', reason: 'มี Fortify กันการกระเด็น และปาสแลมหอกขัดจังหวะได้' }
+            ]
+        },
+        {
+            id: 'hazard', name: 'Hazard', role: 'Tank',
+            strong: [
+                { name: 'Reinhardt', reason: 'ต้านทานการดันทะลวงระยะประชิดได้ดี' },
+                { name: 'Bastion', reason: 'สามารถป่วนและบีบพื้นที่ของ Bastion ได้' }
+            ],
+            weak: [
+                { name: 'D.Va', reason: 'Mobility สูง สามารถดึงความสนใจ Hazard ออกจากทีมได้' },
+                { name: 'Ana', reason: 'สลีปดาร์ทและขวดม่วงทำลายจังหวะไฟต์ได้' }
+            ]
+        },
+        {
+            id: 'junkerqueen', name: 'Junker Queen', role: 'Tank',
+            strong: [
+                { name: 'Roadhog', reason: 'สามารถทำระยะและลดฮีลด้วยสกิลที่มี ทำให้กดดัน Hog ได้ดี' },
+                { name: 'Zenyatta', reason: 'เมื่อเข้าถึงตัวแล้วสามารถจัดการได้รวดเร็ว' }
+            ],
+            weak: [
+                { name: 'Kiriko', reason: 'Suzu ล้างผลของพิษและอัลติได้' },
+                { name: 'Ana', reason: 'ขวดม่วงทำให้เธอฟื้นฟูตัวเองไม่ได้' }
+            ]
+        },
+        {
+            id: 'mauga', name: 'Mauga', role: 'Tank',
+            strong: [
+                { name: 'Reinhardt', reason: 'ยิงทะลุโล่ได้อย่างรวดเร็วด้วยความแรงของปืนคู่' },
+                { name: 'Winston', reason: 'เป้าหมายขนาดใหญ่และดาเมจ Mauga สูงพอจะกดดันได้' }
+            ],
+            weak: [
+                { name: 'Sigma', reason: 'โล่และสกิลดูดดาเมจ ขัดขวางการทำดาเมจและการฮีลตัวเองของ Mauga' },
+                { name: 'Ana', reason: 'แพ้ทางขวดม่วงอย่างหนัก เพราะพึ่งพาการลอบสไลฟ์ (Lifesteal)' }
+            ]
+        },
+        {
+            id: 'orisa', name: 'Orisa', role: 'Tank',
+            strong: [
+                { name: 'Doomfist', reason: 'Fortify ทำให้ไม่โดนผลัก และสามารถปาหอกขัดจังหวะได้' },
+                { name: 'Roadhog', reason: 'ขัดสกิลดึง (Hook) ได้ง่าย' }
+            ],
+            weak: [
+                { name: 'Zarya', reason: 'ปืน Beam ทะลุการหมุนหอก (Javelin Spin)' },
+                { name: 'Symetra', reason: 'ใช้ปืน Beam เจาะเกราะได้ดี' }
+            ]
+        },
+        {
+            id: 'ramattra', name: 'Ramattra', role: 'Tank',
+            strong: [
+                { name: 'Reinhardt', reason: 'ร่าง Nemesis สามารถต่อยทะลุโล่ของ Reinhardt ได้' },
+                { name: 'Sigma', reason: 'การต่อยทะลุบาเรียทำให้ Sigma ป้องกันยาก' }
+            ],
+            weak: [
+                { name: 'Bastion', reason: 'ร่างรถถังสามารถละลาย Ramattra ได้แม้ขณะบล็อค' },
+                { name: 'Ana', reason: 'เมื่ออยู่ในร่าง Nemesis จะเป็นเป้าสลีปดาร์ทที่ง่าย' }
+            ]
+        },
+        {
+            id: 'reinhardt', name: 'Reinhardt', role: 'Tank',
+            strong: [
+                { name: 'Soldier: 76', reason: 'โล่ขนาดใหญ่สามารถบังดาเมจได้ดี' },
+                { name: 'Zarya', reason: 'สร้างระยะประชิดและบีบพื้นที่ Zarya ได้' }
+            ],
+            weak: [
+                { name: 'Ramattra', reason: 'แพ้ทางกำปั้นทะลุโล่' },
+                { name: 'Pharah', reason: 'ป้องกันการโจมตีจากมุมสูงได้ยาก' }
+            ]
+        },
+        {
+            id: 'roadhog', name: 'Roadhog', role: 'Tank',
+            strong: [
+                { name: 'Winston', reason: 'ใช้ Hook ดึงวินสตันมาฆ่าได้ง่าย' },
+                { name: 'Doomfist', reason: 'ขัดจังหวะคอมโบด้วย Hook' }
+            ],
+            weak: [
+                { name: 'Ana', reason: 'ขวดม่วงและสลีปดาร์ทเป็นตัวอันตรายที่สุด' },
+                { name: 'Reaper', reason: 'Roadhog เป็นเป้าขนาดใหญ่ให้ Reaper ยิงได้อย่างแม่นยำ' }
+            ]
+        },
+        {
+            id: 'sigma', name: 'Sigma', role: 'Tank',
+            strong: [
+                { name: 'Bastion', reason: 'Kinetic Grasp สามารถดูดซับดาเมจมหาศาลจากป้อมได้' },
+                { name: 'Widowmaker', reason: 'โยนโล่บังมุมยิงของสไนเปอร์ได้อิสระ' }
+            ],
+            weak: [
+                { name: 'Winston', reason: 'วินสตันสามารถกระโดดทะลุโล่และยิงทะลุ Kinetic Grasp ได้' },
+                { name: 'Doomfist', reason: 'โดนพุ่งชนทะลุการป้องกันทุกอย่าง' }
+            ]
+        },
+        {
+            id: 'winston', name: 'Winston', role: 'Tank',
+            strong: [
+                { name: 'Genji', reason: 'ปืนไฟฟ้ายิงไม่สน Deflect และกระโดดตามได้' },
+                { name: 'Widowmaker', reason: 'ล้วงถึงตัวง่ายดายและกางโดมบังสายตา' }
+            ],
+            weak: [
+                { name: 'Reaper', reason: 'ดาเมจแรงระยะประชิด ทำให้วินสตันเล่นยาก' },
+                { name: 'Bastion', reason: 'ฉีกโดมและวินสตันเป็นชิ้นๆ ได้ในไม่กี่วินาที' }
+            ]
+        },
+        {
+            id: 'wreckingball', name: 'Wrecking Ball', role: 'Tank',
+            strong: [
+                { name: 'Widowmaker', reason: 'ความคล่องตัวสูง เข้าถึงตัวสไนเปอร์ได้ไว' },
+                { name: 'Zenyatta', reason: 'ง่ายต่อการ Piledriver ใส่' }
+            ],
+            weak: [
+                { name: 'Sombra', reason: 'ถูกแฮ็กจะหยุดชะงักทันที' },
+                { name: 'Mei', reason: 'สกิลน้ำแข็งสโลว์และแช่แข็งรบกวนการเคลื่อนที่อย่างมาก' }
             ]
         },
         {
             id: 'zarya', name: 'Zarya', role: 'Tank',
             strong: [
-                { name: 'D.Va', reason: 'ปืนหลักยิงทะลุ Matrix และโล่บับเบิ้ลป้องกันระเบิด D.Va ได้' },
+                { name: 'D.Va', reason: 'ปืนลำแสง (Beam) ยิงทะลุ Defense Matrix ได้ 100%' },
                 { name: 'Orisa', reason: 'สามารถเดินทะลุล้อหมุนมาจี้ทำดาเมจได้' }
             ],
             weak: [
@@ -202,20 +323,68 @@
                 { name: 'Pharah', reason: 'Zarya ไม่มี Mobility และสกิลยิงไกลพอที่จะจัดการ Pharah บนฟ้าได้' }
             ]
         },
+
+        // --- DAMAGE ---
         {
-            id: 'shion', name: 'Shion', role: 'Damage',
+            id: 'ashe', name: 'Ashe', role: 'Damage',
             strong: [
-                { name: 'Zenyatta', reason: 'เป็นเป้าหมายที่เคลื่อนที่ช้า ทำให้ Shion โจมตีและทำคอมโบได้ง่าย' }
+                { name: 'Pharah', reason: 'สามารถใช้ปืนเล็งยิงจากระยะไกลจัดการได้ดี' },
+                { name: 'Echo', reason: 'Hitscan เป็นตัวเคาน์เตอร์ของเหล่าฮีโร่บิน' }
             ],
             weak: [
-                { name: 'Sombra', reason: 'การโดนแฮ็กจะปิดการใช้งานสกิลหลบหนี ทำให้ Shion เป็นเป้านิ่ง' },
-                { name: 'Ana', reason: 'ปาขวดม่วง (Biotic Grenade) ตัดฮีลตอนที่ Shion พยายามเข้าทำจังหวะ' }
+                { name: 'Winston', reason: 'โดดล้วงและกางโดมป้องกันได้' },
+                { name: 'Genji', reason: 'Deflect สวนกลับและมีความคล่องตัวสูง' }
+            ]
+        },
+        {
+            id: 'bastion', name: 'Bastion', role: 'Damage',
+            strong: [
+                { name: 'Reinhardt', reason: 'ละลายโล่ Reinhardt ได้ภายในเวลาไม่กี่วินาที' },
+                { name: 'Winston', reason: 'จัดการเป้าหมายใหญ่ได้อย่างรวดเร็ว' }
+            ],
+            weak: [
+                { name: 'Genji', reason: 'แพ้ทาง Deflect ถ้ายิงใส่ตอนโหมดป้อม' },
+                { name: 'Ana', reason: 'เป็นเป้าใหญ่สำหรับ Sleep Dart ในจังหวะยิงโหมดป้อม' }
+            ]
+        },
+        {
+            id: 'cassidy', name: 'Cassidy', role: 'Damage',
+            strong: [
+                { name: 'Tracer', reason: 'Magnetic Grenade ขัดขวางความคล่องตัวของ Tracer' },
+                { name: 'Sombra', reason: 'สามารถยิงสวนและขัดจังหวะการหลบหนีด้วยระเบิดได้' }
+            ],
+            weak: [
+                { name: 'Widowmaker', reason: 'เสียเปรียบในเรื่องระยะการยิง' },
+                { name: 'Orisa', reason: 'ทะลุการป้องกันระยะไกลยาก' }
+            ]
+        },
+        {
+            id: 'domina', name: 'Domina', role: 'Damage',
+            strong: [
+                { name: 'Hazard', reason: 'สกิลพื้นที่ทำความเสียหายสามารถทะลวงแนวป้องกันได้' },
+                { name: 'Freja', reason: 'สามารถบล็อคพื้นที่ทำการของ Freja' }
+            ],
+            weak: [
+                { name: 'Bastion', reason: 'Bastion โหมดป้อมทำลายการป้องกันได้รวดเร็ว' },
+                { name: 'Sombra', reason: 'ป่วนจากด้านหลังและขัดขวางจังหวะสกิล' }
+            ]
+        },
+        {
+            id: 'echo', name: 'Echo', role: 'Damage',
+            strong: [
+                { name: 'Junkrat', reason: 'อยู่กลางอากาศทำให้รับดาเมจได้ยาก' },
+                { name: 'Reaper', reason: 'เล่นอยู่เหนือระยะทำการของ Reaper' }
+            ],
+            weak: [
+                { name: 'Soldier: 76', reason: 'อาวุธ Hitscan ร่วง Echo ได้ง่าย' },
+                { name: 'Cassidy', reason: 'แม่นยำระยะกลางสอยร่วงง่าย' }
             ]
         },
         {
             id: 'freja', name: 'Freja', role: 'Damage',
             strong: [
-                { name: 'Mei', reason: 'สามารถรักษาระยะห่างและทำดาเมจจากวงนอกได้ดีกว่า' }
+                { name: 'Mei', reason: 'สามารถรักษาระยะห่างและทำดาเมจจากวงนอกได้ดีกว่า' },
+                { name: 'Junkrat', reason: 'ความคล่องตัวช่วยหลบดาเมจพื้นที่' }
             ],
             weak: [
                 { name: 'D.Va', reason: 'บินเข้ามาประชิดตัวได้รวดเร็วและดูดซับดาเมจทั้งหมดได้' },
@@ -223,25 +392,291 @@
             ]
         },
         {
-            id: 'ana', name: 'Ana', role: 'Support',
+            id: 'genji', name: 'Genji', role: 'Damage',
             strong: [
-                { name: 'Roadhog', reason: 'เป้าใหญ่ ปาขวดม่วงใส่เพื่อปิดการฮีลตัวเอง (Take a Breather) ได้ชะงัด' },
-                { name: 'Mauga', reason: 'Sleep Dart และขวดม่วงทำให้ Mauga ที่ต้องพึ่งการดูดเลือดตายได้ทันที' }
+                { name: 'Bastion', reason: 'Deflect สวนกลับดาเมจมหาศาล' },
+                { name: 'Widowmaker', reason: 'ความคล่องตัวทำให้เป็นเป้าที่ยิงยากและปีนล้วงได้' }
             ],
             weak: [
-                { name: 'Kiriko', reason: 'Suzu ของ Kiriko สามารถล้างสถานะหลับและติดขวดม่วงได้ทั้งหมด' },
-                { name: 'Genji', reason: 'คล่องตัวสูง หลบสลีปดาร์ทง่าย และล้วง Ana ได้รวดเร็ว' }
+                { name: 'Winston', reason: 'ปืนเลเซอร์ไม่สน Deflect และตามล้วงได้' },
+                { name: 'Moira', reason: 'ดูดเลือดล็อคเป้าและลูกแก้วสร้างความรำคาญ' }
+            ]
+        },
+        {
+            id: 'hanzo', name: 'Hanzo', role: 'Damage',
+            strong: [
+                { name: 'Widowmaker', reason: 'สามารถใช้ Sonic Arrow เช็คตำแหน่งและยิงกดดัน' },
+                { name: 'Bastion', reason: 'ใช้ Storm Arrow สร้างดาเมจชุดใหญ่แบบโผล่มายิงแปบเดียว' }
+            ],
+            weak: [
+                { name: 'D.Va', reason: 'บินประชิดตัวและใช้ Matrix บังการยิง' },
+                { name: 'Winston', reason: 'โดดทับและกางโดมจำกัดพื้นที่' }
+            ]
+        },
+        {
+            id: 'junkrat', name: 'Junkrat', role: 'Damage',
+            strong: [
+                { name: 'Reinhardt', reason: 'ยิงข้ามโล่หรือพังโล่ได้อย่างรวดเร็ว' },
+                { name: 'Shion', reason: 'วางกับดักและสาดระเบิดกดดันในพื้นที่แคบ' }
+            ],
+            weak: [
+                { name: 'Pharah', reason: 'Junkrat ยิงเป้าหมายที่อยู่บนฟ้าได้ยากมาก' },
+                { name: 'Echo', reason: 'เช่นเดียวกับ Pharah ที่อยู่เหนือหัวตลอด' }
+            ]
+        },
+        {
+            id: 'mei', name: 'Mei', role: 'Damage',
+            strong: [
+                { name: 'Wrecking Ball', reason: 'สโลว์หยุดการเคลื่อนไหวของลูกบอลได้ดี' },
+                { name: 'D.Va', reason: 'ปืนแช่แข็งยิงทะลุ Matrix' }
+            ],
+            weak: [
+                { name: 'Pharah', reason: 'รักษาระยะห่างและทำดาเมจจากมุมสูง' },
+                { name: 'Widowmaker', reason: 'ยิงจากระยะไกลที่ Mei ไปไม่ถึง' }
+            ]
+        },
+        {
+            id: 'pharah', name: 'Pharah', role: 'Damage',
+            strong: [
+                { name: 'Junkrat', reason: 'ลอยตัวเหนือระยะทำการและระยะระเบิด' },
+                { name: 'Reaper', reason: 'รักษาระยะห่างจากปืนลูกซองได้' }
+            ],
+            weak: [
+                { name: 'Soldier: 76', reason: 'อาวุธ Hitscan เป็นศัตรูตัวฉกาจของ Pharah' },
+                { name: 'Ashe', reason: 'เล็งยิงจากระยะไกลได้แม่นยำ' }
+            ]
+        },
+        {
+            id: 'reaper', name: 'Reaper', role: 'Damage',
+            strong: [
+                { name: 'Winston', reason: 'ลูกซองคู่จัดการเป้าหมายขนาดใหญ่และเลือดเยอะได้อย่างดี' },
+                { name: 'Roadhog', reason: 'เช่นเดียวกับวินสตัน แต่ต้องระวัง Hook' }
+            ],
+            weak: [
+                { name: 'Pharah', reason: 'ไม่สามารถทำดาเมจใส่เป้าหมายบนฟ้าได้' },
+                { name: 'Widowmaker', reason: 'ยิงจัดการได้ก่อนที่ Reaper จะเข้าใกล้' }
+            ]
+        },
+        {
+            id: 'sojourn', name: 'Sojourn', role: 'Damage',
+            strong: [
+                { name: 'Pharah', reason: 'Railgun ชาร์จเต็มสอยกลางอากาศได้' },
+                { name: 'Roadhog', reason: 'ใช้เป็นเป้าชาร์จพลังงานได้ง่าย' }
+            ],
+            weak: [
+                { name: 'Sigma', reason: 'โล่สองชั้นบังการยิง Railgun' },
+                { name: 'Genji', reason: 'ป่วนการเล็งและ Deflect การโจมตีกลับ' }
+            ]
+        },
+        {
+            id: 'soldier76', name: 'Soldier: 76', role: 'Damage',
+            strong: [
+                { name: 'Pharah', reason: 'ปืนแม่นยำ เหมาะกับการสอยเป้าหมายกลางอากาศ' },
+                { name: 'Echo', reason: 'เช่นเดียวกับ Pharah' }
+            ],
+            weak: [
+                { name: 'D.Va', reason: 'Matrix กินกระสุนและบินไล่ล่าได้' },
+                { name: 'Widowmaker', reason: 'ระยะยิงไกลกว่า' }
+            ]
+        },
+        {
+            id: 'sombra', name: 'Sombra', role: 'Damage',
+            strong: [
+                { name: 'Doomfist', reason: 'แฮ็กแล้วกลายเป็นเป้านิ่ง' },
+                { name: 'Wrecking Ball', reason: 'แฮ็กปิดการขยับของลูกบอล' }
+            ],
+            weak: [
+                { name: 'Winston', reason: 'ปืนไฟฟ้ายิงเช็ค Sombra ตอนหายตัวได้ดี' },
+                { name: 'Hanzo', reason: 'Sonic Arrow ช่วยเปิดเผยตำแหน่ง' }
+            ]
+        },
+        {
+            id: 'shion', name: 'Shion', role: 'Damage',
+            strong: [
+                { name: 'Zenyatta', reason: 'เป้าหมายที่เคลื่อนที่ช้า ทำให้โจมตีและทำคอมโบได้ง่าย' },
+                { name: 'Widowmaker', reason: 'ความคล่องตัวสูง เข้าประชิดตัวได้ไว' }
+            ],
+            weak: [
+                { name: 'Sombra', reason: 'โดนแฮ็กแล้วเป็นเป้านิ่ง' },
+                { name: 'Ana', reason: 'ขวดม่วงตัดฮีลตอนเข้าทำ' }
+            ]
+        },
+        {
+            id: 'symmetra', name: 'Symmetra', role: 'Damage',
+            strong: [
+                { name: 'D.Va', reason: 'ปืนเลเซอร์ทะลุ Matrix' },
+                { name: 'Reinhardt', reason: 'ใช้โล่ชาร์จดาเมจปืนลำแสงให้แรงขึ้น' }
+            ],
+            weak: [
+                { name: 'Pharah', reason: 'ป้อมปืนยิงไม่ถึงและทำดาเมจยาก' },
+                { name: 'Winston', reason: 'ปืนไฟฟ้าเคลียร์ป้อมได้ทีละหลายอัน' }
+            ]
+        },
+        {
+            id: 'torbjorn', name: 'Torbjörn', role: 'Damage',
+            strong: [
+                { name: 'Tracer', reason: 'ป้อมปืนล็อคเป้าอัตโนมัติกดดันได้ดี' },
+                { name: 'Genji', reason: 'ป้อมปืนจำกัดพื้นที่การเล่นของเก็นจิ' }
+            ],
+            weak: [
+                { name: 'Pharah', reason: 'ยิงพังป้อมได้ง่ายจากระยะไกล' },
+                { name: 'Hanzo', reason: 'สามารถพังป้อมได้เร็วด้วย Storm Arrow' }
+            ]
+        },
+        {
+            id: 'tracer', name: 'Tracer', role: 'Damage',
+            strong: [
+                { name: 'Zenyatta', reason: 'เข้าประชิดและจัดการได้ไวมาก' },
+                { name: 'Widowmaker', reason: 'ป่วนจากระยะใกล้' }
+            ],
+            weak: [
+                { name: 'Cassidy', reason: 'Magnetic Grenade ล็อคการเคลื่อนที่' },
+                { name: 'Torbjörn', reason: 'ป้อมปืนล็อคเป้าอัตโนมัติ' }
+            ]
+        },
+        {
+            id: 'venture', name: 'Venture', role: 'Damage',
+            strong: [
+                { name: 'Reinhardt', reason: 'มุดดินลอดโล่ไปป่วนด้านหลังได้' },
+                { name: 'Zenyatta', reason: 'ทะลวงแนวป้องกันเข้าไปเบิร์สดาเมจใส่ Zen ได้ง่าย' }
+            ],
+            weak: [
+                { name: 'Pharah', reason: 'ไม่สามารถทำดาเมจจากอากาศได้' },
+                { name: 'Sombra', reason: 'โดนแฮ็กขณะอยู่บนพื้นดินจะหนีไม่ได้' }
+            ]
+        },
+        {
+            id: 'widowmaker', name: 'Widowmaker', role: 'Damage',
+            strong: [
+                { name: 'Pharah', reason: 'ปืนสไนเปอร์ระยะไกลเหนือกว่ามาก' },
+                { name: 'Ana', reason: 'ยิงเก็บซัพพอร์ตที่ไม่ค่อยมีการเคลื่อนที่' }
+            ],
+            weak: [
+                { name: 'Winston', reason: 'โดดตามล้วงได้ตลอด' },
+                { name: 'Genji', reason: 'คล่องตัวและพุ่งเข้าถึงตัวง่าย' }
+            ]
+        },
+
+        // --- SUPPORT ---
+        {
+            id: 'ana', name: 'Ana', role: 'Support',
+            strong: [
+                { name: 'Roadhog', reason: 'ปาขวดม่วงใส่เพื่อปิดการฮีลตัวเองได้ชะงัด' },
+                { name: 'Mauga', reason: 'Sleep Dart และขวดม่วงทำให้ Mauga เล่นยาก' }
+            ],
+            weak: [
+                { name: 'Kiriko', reason: 'Suzu ล้างสถานะหลับและติดขวดม่วงได้ทั้งหมด' },
+                { name: 'Genji', reason: 'คล่องตัวสูง หลบสลีปดาร์ทง่าย และล้วงรวดเร็ว' }
+            ]
+        },
+        {
+            id: 'baptiste', name: 'Baptiste', role: 'Support',
+            strong: [
+                { name: 'Pharah', reason: 'ปืนมีระยะทำดาเมจดีพอจะกดดัน Pharah ได้' },
+                { name: 'Zarya', reason: 'Immortality Field ช่วยทีมจาก Graviton Surge ได้' }
+            ],
+            weak: [
+                { name: 'Sombra', reason: 'แฮ็ก Immortality Field หรือตัว Bap เองได้' },
+                { name: 'Doomfist', reason: 'กระแทกคนให้ออกจากวง Immortality Field ได้' }
+            ]
+        },
+        {
+            id: 'brigitte', name: 'Brigitte', role: 'Support',
+            strong: [
+                { name: 'Tracer', reason: 'โล่ดันและขัดขวางจังหวะล้วงได้ดี' },
+                { name: 'Wrecking Ball', reason: 'Shield Bash หยุดการเคลื่อนไหวของลูกบอลได้' }
+            ],
+            weak: [
+                { name: 'Pharah', reason: 'ตีไม่ถึงและแพ้ทางดาเมจสแปลชรุนแรง' },
+                { name: 'Bastion', reason: 'ยิงละลายโล่และตัวเธอในเสี้ยววิ' }
+            ]
+        },
+        {
+            id: 'illari', name: 'Illari', role: 'Support',
+            strong: [
+                { name: 'Pharah', reason: 'Hitscan สามารถยิงกดดันหรือเก็บกลางอากาศได้' },
+                { name: 'Tracer', reason: 'Pylon ฮีลตัวเองช่วยยื้อ และระเบิดผลักตัวล้วงได้' }
+            ],
+            weak: [
+                { name: 'D.Va', reason: 'Matrix ลบดาเมจและอัลติเมท (Captive Sun) ได้' },
+                { name: 'Sombra', reason: 'ลอบมาแฮ็กทำลาย Healing Pylon ได้ง่าย' }
+            ]
+        },
+        {
+            id: 'jetpackcat', name: 'Jetpack Cat', role: 'Support',
+            strong: [
+                { name: 'Reaper', reason: 'รักษาระยะห่างทางอากาศได้ดี' },
+                { name: 'Junkrat', reason: 'ความคล่องตัวในอากาศหลบระเบิดได้' }
+            ],
+            weak: [
+                { name: 'Soldier: 76', reason: 'เป้าบินให้ Hitscan ยิงร่วงง่าย' },
+                { name: 'Cassidy', reason: 'Hitscan ระยะกลางจัดการเป้าทางอากาศ' }
             ]
         },
         {
             id: 'kiriko', name: 'Kiriko', role: 'Support',
             strong: [
                 { name: 'Ana', reason: 'Suzu เป็นสกิลแก้ทาง Biotic Grenade ได้สมบูรณ์แบบที่สุด' },
-                { name: 'Ashe', reason: 'ล้างสถานะไฟไหม้จาก Dynamite ได้ และคุนายสามารถยิงสู้สไนเปอร์ได้' }
+                { name: 'Ashe', reason: 'ล้างสถานะไฟไหม้จาก Dynamite ได้' }
             ],
             weak: [
-                { name: 'Tracer', reason: 'ความเร็วของ Tracer บีบให้ Kiriko ต้องเสียสกิล Swift Step หนีเสมอ' },
-                { name: 'Winston', reason: 'โดมโล่ของ Winston ปิดกั้นการฮีลของ Kiriko ได้' }
+                { name: 'Tracer', reason: 'ความเร็วบีบให้ต้องเสียสกิล Swift Step หนีเสมอ' },
+                { name: 'Winston', reason: 'โดมโล่ปิดกั้นการฮีล' }
+            ]
+        },
+        {
+            id: 'lifeweaver', name: 'Lifeweaver', role: 'Support',
+            strong: [
+                { name: 'Zarya', reason: 'Petal Platform หรือ Life Grip ดึงเพื่อนออกจาก Graviton Surge ได้' },
+                { name: 'Orisa', reason: 'ดึงเพื่อนที่กำลังจะโดนอัลติรวบของ Orisa ออกมาได้' }
+            ],
+            weak: [
+                { name: 'Sombra', reason: 'แฮ็กแพลตฟอร์มให้พังและล้วงเก็บได้ง่าย' },
+                { name: 'Widowmaker', reason: ' hitbox ใหญ่ เป็นเป้าที่สไนเปอร์ยิงง่าย' }
+            ]
+        },
+        {
+            id: 'lucio', name: 'Lúcio', role: 'Support',
+            strong: [
+                { name: 'Reinhardt', reason: 'Boost Speed ช่วยให้ทีมเวิร์คเข้าชาร์จหรือหนีได้ดี' },
+                { name: 'Mei', reason: 'Boop ขัดขวางระยะของ Mei' }
+            ],
+            weak: [
+                { name: 'Sombra', reason: 'แฮ็กทำให้เพลงดับ กลายเป็นตัวไร้ประโยชน์ชั่วคราว' },
+                { name: 'Cassidy', reason: 'Grenade และความแม่นยำจัดการความคล่องตัวได้' }
+            ]
+        },
+        {
+            id: 'mercy', name: 'Mercy', role: 'Support',
+            strong: [
+                { name: 'Pharah', reason: 'บินสนับสนุนและบูสต์ดาเมจได้ดีมาก (Pharmercy)' },
+                { name: 'Ashe', reason: 'คู่หูบูสต์ดาเมจสุดแกร่ง' }
+            ],
+            weak: [
+                { name: 'Widowmaker', reason: 'เป็นเป้าหลักกลางอากาศและระยะไกล' },
+                { name: 'Soldier: 76', reason: 'ตามยิงขณะบินหรือพุ่งไปมา' }
+            ]
+        },
+        {
+            id: 'moira', name: 'Moira', role: 'Support',
+            strong: [
+                { name: 'Genji', reason: 'ล็อคเป้าทำดาเมจทะลุ Deflect' },
+                { name: 'Tracer', reason: 'ลูกแก้วทำดาเมจในที่แคบและสู้กลับได้' }
+            ],
+            weak: [
+                { name: 'D.Va', reason: 'Defense Matrix กลืนลูกแก้ว' },
+                { name: 'Widowmaker', reason: 'Moira ขาดความสามารถในการต่อสู้ระยะไกล' }
+            ]
+        },
+        {
+            id: 'zenyatta', name: 'Zenyatta', role: 'Support',
+            strong: [
+                { name: 'Roadhog', reason: 'Orb of Discord ช่วยเพิ่มดาเมจละลายเป้าหมายใหญ่' },
+                { name: 'Mauga', reason: 'Discord สลายเลือดมหาศาลได้อย่างรวดเร็ว' }
+            ],
+            weak: [
+                { name: 'Sombra', reason: 'เป้านิ่ง ไร้สกิลหนี เข้าถึงตัวง่าย' },
+                { name: 'Tracer', reason: 'ความคล่องตัวสูงหลบลูกแก้วได้และจัดการ Zen ได้ไว' }
             ]
         }
     ];
