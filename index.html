@@ -84,7 +84,6 @@
             box-shadow: 0 4px 12px rgba(147, 197, 253, 0.5);
         }
 
-        /* ปรับปรุง Grid และ Card เพื่อให้ใส่รูปได้สวยงาม */
         .hero-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -118,7 +117,6 @@
             transform: translateY(-5px);
         }
 
-        /* คลาสสำหรับรูปภาพฮีโร่ */
         .hero-img {
             width: 80px;
             height: 80px;
@@ -126,7 +124,7 @@
             object-position: top;
             border-radius: 15px;
             margin-bottom: 10px;
-            background-color: #e2e8f0; /* สีพื้นหลังรูปตอนโหลด */
+            background-color: #e2e8f0; 
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
         }
 
@@ -187,7 +185,6 @@
             gap: 8px;
         }
 
-        /* รูปภาพฮีโร่ขนาดจิ๋วในกล่องแก้ทาง */
         .counter-img-mini {
             width: 24px;
             height: 24px;
@@ -235,64 +232,89 @@
 </div>
 
 <script>
-    // URL สำหรับดึงรูปภาพจาก Fandom Wiki ของ Overwatch
-    const imgBaseUrl = "https://static.wikia.nocookie.net/overwatch_gamepedia/images/";
+    // URL ดึงรูปโดยตรงจากเซิร์ฟเวอร์หลักของ Blizzard
+    const imgBaseUrl = "https://d15f34w2p8l1cc.cloudfront.net/overwatch/3429c3947f63648ef570eb92711ac5dd/";
     
-    // ฐานข้อมูลฮีโร่พร้อมกำหนดลิงก์รูปภาพ
-    const heroesData = [
-        // TANK
-        { id: 'dva', name: 'D.Va', role: 'Tank', img: '3/32/DVa_OW2_Portrait.png', counters: ['Zarya', 'Roadhog', 'Symmetra', 'Mei', 'Sombra', 'Brigitte'] },
-        { id: 'doomfist', name: 'Doomfist', role: 'Tank', img: '9/95/Doomfist_OW2_Portrait.png', counters: ['Orisa', 'Roadhog', 'Zarya', 'Cassidy', 'Sombra', 'Junkrat', 'Mei', 'Ana', 'Brigitte'] },
-        { id: 'orisa', name: 'Orisa', role: 'Tank', img: '4/48/Orisa_OW2_Portrait.png', counters: ['Zarya', 'Roadhog', 'Symmetra', 'Bastion', 'Echo', 'Zenyatta'] },
-        { id: 'ramattra', name: 'Ramattra', role: 'Tank', img: '6/6a/Ramattra_Portrait.png', counters: ['Orisa', 'Zarya', 'Mauga', 'Bastion', 'Mei', 'Ana', 'Zenyatta'] },
-        { id: 'reinhardt', name: 'Reinhardt', role: 'Tank', img: '2/22/Reinhardt_OW2_Portrait.png', counters: ['Ramattra', 'Orisa', 'Bastion', 'Pharah', 'Mei', 'Junkrat', 'Symmetra', 'Sombra'] },
-        { id: 'roadhog', name: 'Roadhog', role: 'Tank', img: '3/3e/Roadhog_OW2_Portrait.png', counters: ['Zarya', 'Mauga', 'Orisa', 'Ana', 'Zenyatta', 'Reaper', 'Mei', 'Sombra'] },
-        { id: 'sigma', name: 'Sigma', role: 'Tank', img: 'c/ce/Sigma_OW2_Portrait.png', counters: ['Reinhardt', 'Ramattra', 'Winston', 'Zarya', 'Symmetra', 'Mei', 'Sombra'] },
-        { id: 'winston', name: 'Winston', role: 'Tank', img: '7/7f/Winston_OW2_Portrait.png', counters: ['D.Va', 'Roadhog', 'Mauga', 'Reaper', 'Bastion', 'Torbjorn', 'Brigitte'] },
-        { id: 'wreckingball', name: 'Wrecking Ball', role: 'Tank', img: '3/33/Wrecking_Ball_OW2_Portrait.png', counters: ['Roadhog', 'Mauga', 'Sombra', 'Mei', 'Cassidy', 'Brigitte'] },
-        { id: 'zarya', name: 'Zarya', role: 'Tank', img: '6/6e/Zarya_OW2_Portrait.png', counters: ['Reinhardt', 'Ramattra', 'Winston', 'Bastion', 'Pharah', 'Widowmaker', 'Lifeweaver'] },
+    // ข้อมูลชื่อรูปภาพฮีโร่แต่ละตัว
+    const imgData = {
+        'D.Va': 'dva-001.png',
+        'Doomfist': 'doomfist-001.png',
+        'Orisa': 'orisa-001.png',
+        'Ramattra': 'ramattra-001.png',
+        'Reinhardt': 'reinhardt-001.png',
+        'Roadhog': 'roadhog-001.png',
+        'Sigma': 'sigma-001.png',
+        'Winston': 'winston-001.png',
+        'Wrecking Ball': 'wrecking-ball-001.png',
+        'Zarya': 'zarya-001.png',
+        'Mauga': 'mauga-001.png',
         
-        // DAMAGE
-        { id: 'tracer', name: 'Tracer', role: 'Damage', img: '2/2b/Tracer_OW2_Portrait.png', counters: ['Zarya', 'Cassidy', 'Echo', 'Pharah', 'Reaper', 'Sombra', 'Brigitte'] },
-        { id: 'sojourn', name: 'Sojourn', role: 'Damage', img: '1/1d/Sojourn_Portrait.png', counters: ['Zarya', 'Winston', 'D.Va', 'Doomfist'] },
-        { id: 'soldier76', name: 'Soldier: 76', role: 'Damage', img: '0/0d/Soldier_76_OW2_Portrait.png', counters: ['Winston', 'D.Va', 'Tracer', 'Cassidy', 'Pharah', 'Reaper'] },
-        { id: 'cassidy', name: 'Cassidy', role: 'Damage', img: '3/33/Cassidy_OW2_Portrait.png', counters: ['Zarya', 'D.Va', 'Ashe', 'Widowmaker', 'Hanzo'] },
-        { id: 'reaper', name: 'Reaper', role: 'Damage', img: 'd/d5/Reaper_OW2_Portrait.png', counters: ['Zarya', 'D.Va', 'Winston', 'Pharah', 'Echo', 'Widowmaker', 'Hanzo'] },
-        { id: 'pharah', name: 'Pharah', role: 'Damage', img: '9/90/Pharah_OW2_Portrait.png', counters: ['D.Va', 'Winston', 'Soldier: 76', 'Cassidy', 'Ashe', 'Widowmaker', 'Echo'] },
-        { id: 'echo', name: 'Echo', role: 'Damage', img: '6/63/Echo_OW2_Portrait.png', counters: ['D.Va', 'Soldier: 76', 'Cassidy', 'Ashe', 'Widowmaker', 'Sombra'] },
-        { id: 'sombra', name: 'Sombra', role: 'Damage', img: '4/45/Sombra_OW2_Portrait.png', counters: ['Winston', 'Zarya', 'Mei', 'Pharah', 'Hanzo', 'Kiriko', 'Brigitte'] },
-        { id: 'mei', name: 'Mei', role: 'Damage', img: '0/06/Mei_OW2_Portrait.png', counters: ['Pharah', 'Echo', 'Widowmaker', 'Hanzo', 'Ashe'] },
-        { id: 'junkrat', name: 'Junkrat', role: 'Damage', img: '7/7f/Junkrat_OW2_Portrait.png', counters: ['Pharah', 'Echo', 'Widowmaker', 'Ashe', 'Soldier: 76'] },
-        { id: 'torbjorn', name: 'Torbjörn', role: 'Damage', img: '1/12/Torbjorn_OW2_Portrait.png', counters: ['Pharah', 'Echo', 'Junkrat', 'Widowmaker', 'Hanzo'] },
-        { id: 'hanzo', name: 'Hanzo', role: 'Damage', img: '4/4c/Hanzo_OW2_Portrait.png', counters: ['D.Va', 'Winston', 'Tracer', 'Genji', 'Sombra', 'Pharah'] },
-        { id: 'widowmaker', name: 'Widowmaker', role: 'Damage', img: 'f/ff/Widowmaker_OW2_Portrait.png', counters: ['Winston', 'D.Va', 'Wrecking Ball', 'Tracer', 'Genji', 'Sombra'] },
-        { id: 'ashe', name: 'Ashe', role: 'Damage', img: 'b/bc/Ashe_OW2_Portrait.png', counters: ['Winston', 'D.Va', 'Widowmaker', 'Tracer', 'Genji'] },
-        { id: 'bastion', name: 'Bastion', role: 'Damage', img: '3/32/Bastion_OW2_Portrait.png', counters: ['Genji', 'Sigma', 'D.Va', 'Hanzo', 'Ana', 'Sombra'] },
-        { id: 'symmetra', name: 'Symmetra', role: 'Damage', img: 'c/ce/Symmetra_OW2_Portrait.png', counters: ['Winston', 'Pharah', 'Echo', 'Junkrat', 'Widowmaker'] },
-        { id: 'genji', name: 'Genji', role: 'Damage', img: '0/07/Genji_OW2_Portrait.png', counters: ['Winston', 'Zarya', 'Symmetra', 'Mei', 'Moira', 'Pharah'] }
+        'Tracer': 'tracer-001.png',
+        'Sojourn': 'sojourn-001.png',
+        'Soldier: 76': 'soldier-76-001.png',
+        'Cassidy': 'cassidy-001.png',
+        'Reaper': 'reaper-001.png',
+        'Pharah': 'pharah-001.png',
+        'Echo': 'echo-001.png',
+        'Sombra': 'sombra-001.png',
+        'Mei': 'mei-001.png',
+        'Junkrat': 'junkrat-001.png',
+        'Torbjörn': 'torbjorn-001.png',
+        'Hanzo': 'hanzo-001.png',
+        'Widowmaker': 'widowmaker-001.png',
+        'Ashe': 'ashe-001.png',
+        'Bastion': 'bastion-001.png',
+        'Symmetra': 'symmetra-001.png',
+        'Genji': 'genji-001.png',
+        
+        'Ana': 'ana-001.png',
+        'Zenyatta': 'zenyatta-001.png',
+        'Brigitte': 'brigitte-001.png',
+        'Lifeweaver': 'lifeweaver-001.png',
+        'Kiriko': 'kiriko-001.png',
+        'Moira': 'moira-001.png',
+        'Illari': 'illari-001.png',
+        'Baptiste': 'baptiste-001.png',
+        'Lucio': 'lucio-001.png',
+        'Mercy': 'mercy-001.png'
+    };
+
+    const heroesData = [
+        { id: 'dva', name: 'D.Va', role: 'Tank', counters: ['Zarya', 'Roadhog', 'Symmetra', 'Mei', 'Sombra', 'Brigitte'] },
+        { id: 'doomfist', name: 'Doomfist', role: 'Tank', counters: ['Orisa', 'Roadhog', 'Zarya', 'Cassidy', 'Sombra', 'Junkrat', 'Mei', 'Ana', 'Brigitte'] },
+        { id: 'orisa', name: 'Orisa', role: 'Tank', counters: ['Zarya', 'Roadhog', 'Symmetra', 'Bastion', 'Echo', 'Zenyatta'] },
+        { id: 'ramattra', name: 'Ramattra', role: 'Tank', counters: ['Orisa', 'Zarya', 'Mauga', 'Bastion', 'Mei', 'Ana', 'Zenyatta'] },
+        { id: 'reinhardt', name: 'Reinhardt', role: 'Tank', counters: ['Ramattra', 'Orisa', 'Bastion', 'Pharah', 'Mei', 'Junkrat', 'Symmetra', 'Sombra'] },
+        { id: 'roadhog', name: 'Roadhog', role: 'Tank', counters: ['Zarya', 'Mauga', 'Orisa', 'Ana', 'Zenyatta', 'Reaper', 'Mei', 'Sombra'] },
+        { id: 'sigma', name: 'Sigma', role: 'Tank', counters: ['Reinhardt', 'Ramattra', 'Winston', 'Zarya', 'Symmetra', 'Mei', 'Sombra'] },
+        { id: 'winston', name: 'Winston', role: 'Tank', counters: ['D.Va', 'Roadhog', 'Mauga', 'Reaper', 'Bastion', 'Torbjorn', 'Brigitte'] },
+        { id: 'wreckingball', name: 'Wrecking Ball', role: 'Tank', counters: ['Roadhog', 'Mauga', 'Sombra', 'Mei', 'Cassidy', 'Brigitte'] },
+        { id: 'zarya', name: 'Zarya', role: 'Tank', counters: ['Reinhardt', 'Ramattra', 'Winston', 'Bastion', 'Pharah', 'Widowmaker', 'Lifeweaver'] },
+        { id: 'tracer', name: 'Tracer', role: 'Damage', counters: ['Zarya', 'Cassidy', 'Echo', 'Pharah', 'Reaper', 'Sombra', 'Brigitte'] },
+        { id: 'sojourn', name: 'Sojourn', role: 'Damage', counters: ['Zarya', 'Winston', 'D.Va', 'Doomfist'] },
+        { id: 'soldier76', name: 'Soldier: 76', role: 'Damage', counters: ['Winston', 'D.Va', 'Tracer', 'Cassidy', 'Pharah', 'Reaper'] },
+        { id: 'cassidy', name: 'Cassidy', role: 'Damage', counters: ['Zarya', 'D.Va', 'Ashe', 'Widowmaker', 'Hanzo'] },
+        { id: 'reaper', name: 'Reaper', role: 'Damage', counters: ['Zarya', 'D.Va', 'Winston', 'Pharah', 'Echo', 'Widowmaker', 'Hanzo'] },
+        { id: 'pharah', name: 'Pharah', role: 'Damage', counters: ['D.Va', 'Winston', 'Soldier: 76', 'Cassidy', 'Ashe', 'Widowmaker', 'Echo'] },
+        { id: 'echo', name: 'Echo', role: 'Damage', counters: ['D.Va', 'Soldier: 76', 'Cassidy', 'Ashe', 'Widowmaker', 'Sombra'] },
+        { id: 'sombra', name: 'Sombra', role: 'Damage', counters: ['Winston', 'Zarya', 'Mei', 'Pharah', 'Hanzo', 'Kiriko', 'Brigitte'] },
+        { id: 'mei', name: 'Mei', role: 'Damage', counters: ['Pharah', 'Echo', 'Widowmaker', 'Hanzo', 'Ashe'] },
+        { id: 'junkrat', name: 'Junkrat', role: 'Damage', counters: ['Pharah', 'Echo', 'Widowmaker', 'Ashe', 'Soldier: 76'] },
+        { id: 'torbjorn', name: 'Torbjörn', role: 'Damage', counters: ['Pharah', 'Echo', 'Junkrat', 'Widowmaker', 'Hanzo'] },
+        { id: 'hanzo', name: 'Hanzo', role: 'Damage', counters: ['D.Va', 'Winston', 'Tracer', 'Genji', 'Sombra', 'Pharah'] },
+        { id: 'widowmaker', name: 'Widowmaker', role: 'Damage', counters: ['Winston', 'D.Va', 'Wrecking Ball', 'Tracer', 'Genji', 'Sombra'] },
+        { id: 'ashe', name: 'Ashe', role: 'Damage', counters: ['Winston', 'D.Va', 'Widowmaker', 'Tracer', 'Genji'] },
+        { id: 'bastion', name: 'Bastion', role: 'Damage', counters: ['Genji', 'Sigma', 'D.Va', 'Hanzo', 'Ana', 'Sombra'] },
+        { id: 'symmetra', name: 'Symmetra', role: 'Damage', counters: ['Winston', 'Pharah', 'Echo', 'Junkrat', 'Widowmaker'] },
+        { id: 'genji', name: 'Genji', role: 'Damage', counters: ['Winston', 'Zarya', 'Symmetra', 'Mei', 'Moira', 'Pharah'] }
     ];
 
-    // Helper function สำหรับดึงรูปภาพของฮีโร่ตัวอื่นๆ ที่ไม่อยู่ใน List
     function getHeroImage(heroName) {
-        const found = heroesData.find(h => h.name === heroName);
-        if (found) return imgBaseUrl + found.img;
-        
-        // รูปจำลอง (Fallback) กรณีหาไม่เจอ (ตัวละครใหม่ หรือ Support ที่ยังไม่ได้ใส่ข้อมูลในอาเรย์หลัก)
-        const mockImgMap = {
-            'Ana': '2/23/Ana_OW2_Portrait.png',
-            'Zenyatta': '7/7f/Zenyatta_OW2_Portrait.png',
-            'Brigitte': '2/2e/Brigitte_OW2_Portrait.png',
-            'Lifeweaver': 'a/ae/Lifeweaver_Portrait.png',
-            'Mauga': 'b/b7/Mauga_Portrait.png',
-            'Kiriko': 'a/a4/Kiriko_Portrait.png',
-            'Moira': '8/8a/Moira_OW2_Portrait.png',
-            'Illari': 'f/fa/Illari_Portrait.png',
-            'Venture': '8/8e/Venture_Portrait.png',
-            'Juno': '8/8b/Juno_Portrait.png'
-        };
-        
-        if(mockImgMap[heroName]) return imgBaseUrl + mockImgMap[heroName];
-        return 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'; // รูปเปล่ากรณีไม่มีจริงๆ
+        if(imgData[heroName]) {
+            // ใช้ลิงก์สำรองอีกชุดเพื่อให้ชัวร์ว่าโหลดติด
+            return `https://d1u1mce87gyfbn.cloudfront.net/hero/${heroName.toLowerCase().replace(/[\s:]/g, '-')}/hero-select-portrait.png`;
+        }
+        return 'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt6d289bfad18bd61c/62fc1d0f5ee7152069b2d8fb/Hero_Portrait.png';
     }
 
     function renderHeroes(filterValue) {
@@ -309,9 +331,10 @@
             card.id = `hero-${hero.id}`;
             card.onclick = () => selectHero(hero.id);
             
-            // เพิ่มแท็ก <img> เข้าไปในการ์ด
+            const imgSrc = getHeroImage(hero.name);
+            
             card.innerHTML = `
-                <img src="${imgBaseUrl}${hero.img}" alt="${hero.name}" class="hero-img">
+                <img src="${imgSrc}" alt="${hero.name}" class="hero-img" onerror="this.src='https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt6d289bfad18bd61c/62fc1d0f5ee7152069b2d8fb/Hero_Portrait.png'">
                 <div class="hero-name">${hero.name}</div>
                 <div class="hero-role">${hero.role}</div>
             `;
@@ -335,12 +358,11 @@
 
         const weakList = document.getElementById('weakList');
         
-        // เพิ่มรูปจิ๋วหน้าชื่อฮีโร่ในกล่อง Counter
         weakList.innerHTML = hero.counters.length ? hero.counters.map(name => {
             const imgSrc = getHeroImage(name);
             return `
                 <div class="counter-tag">
-                    <img src="${imgSrc}" class="counter-img-mini" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'">
+                    <img src="${imgSrc}" class="counter-img-mini" onerror="this.src='https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt6d289bfad18bd61c/62fc1d0f5ee7152069b2d8fb/Hero_Portrait.png'">
                     ${name}
                 </div>`;
         }).join('') : '<div class="counter-tag">ไม่มีข้อมูลในตาราง</div>';
