@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overwatch 2 Counter Picker (2026)</title>
+    <style>
+        :root {
+            --primary: #f99e1a; /* Overwatch Orange */
+            --bg-dark: #121822;
+            --bg-card: #212c3d;
+            --text-main: #ffffff;
+            --text-muted: #a0aabf;
+            --win: #4CAF50;
+            --lose: #F44336;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Filter Section */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .filter-btn {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--text-muted);
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: #000;
+        }
+
+        /* Hero Grid */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .hero-card {
+            background-color: var(--bg-card);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .hero-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .hero-card.selected {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(249, 158, 26, 0.5);
+        }
+
+        .hero-role {
+            font-size: 0.8em;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* Matchup Section */
+        .matchup-container {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background-color: var(--bg-card);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .matchup-container.active {
+            display: grid;
+        }
+
+        @media (max-width: 768px) {
+            .matchup-container.active {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .matchup-box {
+            padding: 20px;
+            border-radius: 8px;
+            background-color: rgba(0,0,0,0.2);
+        }
+
+        .matchup-box h3 {
+            margin-top: 0;
+            border-bottom: 2px solid;
+            padding-bottom: 10px;
+        }
+
+        .strong-against h3 { border-color: var(--win); color: var(--win); }
+        .weak-against h3 { border-color: var(--lose); color: var(--lose); }
+
+        .counter-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .counter-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .counter-reason {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>OW2 Counter Picker</h1>
+    
+    <div class="filters" id="filters">
+        <button class="filter-btn active" onclick="filterHeroes('All')">All</button>
+        <button class="filter-btn" onclick="filterHeroes('Tank')">Tank</button>
+        <button class="filter-btn" onclick="filterHeroes('Damage')">Damage</button>
+        <button class="filter-btn" onclick="filterHeroes('Support')">Support</button>
+    </div>
+
+    <div class="hero-grid" id="heroGrid">
+        <!-- Heroes will be injected here via JS -->
+    </div>
+
+    <div class="matchup-container" id="matchupContainer">
+        <div class="matchup-box strong-against">
+            <h3>ชนะทาง (Strong Against)</h3>
+            <div id="strongList"></div>
+        </div>
+        <div class="matchup-box weak-against">
+            <h3>แพ้ทาง (Countered By)</h3>
+            <div id="weakList"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ฐานข้อมูลฮีโร่จำลอง (อัปเดตข้อมูลปี 2026)
+    const heroesData = [
+        {
+            id: 'dva', name: 'D.Va', role: 'Tank',
+            strong: [
+                { name: 'Winston', reason: 'ปืนลูกซองยิงหัวและทำดาเมจระยะประชิดได้รุนแรงกว่า' },
+                { name: 'Pharah', reason: 'บินตามไปเก็บกลางอากาศได้ และ Defense Matrix ลบจรวดทิ้งหมด' },
+                { name: 'Freja', reason: 'ใช้ Mobility พุ่งเข้าประชิดตัวเพื่อตัดระยะทำการของ Freja ได้' }
+            ],
+            weak: [
+                { name: 'Zarya', reason: 'ปืนลำแสง (Beam) ยิงทะลุ Defense Matrix ได้ 100%' },
+                { name: 'Mei', reason: 'ปืนสเปรย์แช่แข็งทะลุ Matrix และสร้างความน่ารำคาญให้ D.Va มาก' }
+            ]
+        },
+        {
+            id: 'zarya', name: 'Zarya', role: 'Tank',
+            strong: [
+                { name: 'D.Va', reason: 'ปืนหลักยิงทะลุ Matrix และโล่บับเบิ้ลป้องกันระเบิด D.Va ได้' },
+                { name: 'Orisa', reason: 'สามารถเดินทะลุล้อหมุนมาจี้ทำดาเมจได้' }
+            ],
+            weak: [
+                { name: 'Reaper', reason: 'ดาเมจจากปืนลูกซองรุนแรงพอที่จะพังบับเบิ้ลและฆ่า Zarya ในพริบตา' },
+                { name: 'Pharah', reason: 'Zarya ไม่มี Mobility และสกิลยิงไกลพอที่จะจัดการ Pharah บนฟ้าได้' }
+            ]
+        },
+        {
+            id: 'shion', name: 'Shion', role: 'Damage',
+            strong: [
+                { name: 'Zenyatta', reason: 'เป็นเป้าหมายที่เคลื่อนที่ช้า ทำให้ Shion โจมตีและทำคอมโบได้ง่าย' }
+            ],
+            weak: [
+                { name: 'Sombra', reason: 'การโดนแฮ็กจะปิดการใช้งานสกิลหลบหนี ทำให้ Shion เป็นเป้านิ่ง' },
+                { name: 'Ana', reason: 'ปาขวดม่วง (Biotic Grenade) ตัดฮีลตอนที่ Shion พยายามเข้าทำจังหวะ' }
+            ]
+        },
+        {
+            id: 'freja', name: 'Freja', role: 'Damage',
+            strong: [
+                { name: 'Mei', reason: 'สามารถรักษาระยะห่างและทำดาเมจจากวงนอกได้ดีกว่า' }
+            ],
+            weak: [
+                { name: 'D.Va', reason: 'บินเข้ามาประชิดตัวได้รวดเร็วและดูดซับดาเมจทั้งหมดได้' },
+                { name: 'Genji', reason: 'Deflect สะท้อนการโจมตีกลับ และพุ่งเข้าล้วงถึงตัวได้ง่าย' }
+            ]
+        },
+        {
+            id: 'ana', name: 'Ana', role: 'Support',
+            strong: [
+                { name: 'Roadhog', reason: 'เป้าใหญ่ ปาขวดม่วงใส่เพื่อปิดการฮีลตัวเอง (Take a Breather) ได้ชะงัด' },
+                { name: 'Mauga', reason: 'Sleep Dart และขวดม่วงทำให้ Mauga ที่ต้องพึ่งการดูดเลือดตายได้ทันที' }
+            ],
+            weak: [
+                { name: 'Kiriko', reason: 'Suzu ของ Kiriko สามารถล้างสถานะหลับและติดขวดม่วงได้ทั้งหมด' },
+                { name: 'Genji', reason: 'คล่องตัวสูง หลบสลีปดาร์ทง่าย และล้วง Ana ได้รวดเร็ว' }
+            ]
+        },
+        {
+            id: 'kiriko', name: 'Kiriko', role: 'Support',
+            strong: [
+                { name: 'Ana', reason: 'Suzu เป็นสกิลแก้ทาง Biotic Grenade ได้สมบูรณ์แบบที่สุด' },
+                { name: 'Ashe', reason: 'ล้างสถานะไฟไหม้จาก Dynamite ได้ และคุนายสามารถยิงสู้สไนเปอร์ได้' }
+            ],
+            weak: [
+                { name: 'Tracer', reason: 'ความเร็วของ Tracer บีบให้ Kiriko ต้องเสียสกิล Swift Step หนีเสมอ' },
+                { name: 'Winston', reason: 'โดมโล่ของ Winston ปิดกั้นการฮีลของ Kiriko ได้' }
+            ]
+        }
+    ];
+
+    // ฟังก์ชันสร้างรายการฮีโร่บนหน้าเว็บ
+    function renderHeroes(filterValue) {
+        const grid = document.getElementById('heroGrid');
+        grid.innerHTML = ''; // ล้างค่าเดิม
+        
+        const filtered = filterValue === 'All' 
+            ? heroesData 
+            : heroesData.filter(h => h.role === filterValue);
+
+        filtered.forEach(hero => {
+            const card = document.createElement('div');
+            card.className = 'hero-card';
+            card.id = `hero-${hero.id}`;
+            card.onclick = () => selectHero(hero.id);
+            
+            card.innerHTML = `
+                <div style="font-weight: bold; font-size: 1.2em;">${hero.name}</div>
+                <div class="hero-role">${hero.role}</div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    // ฟังก์ชันจัดการปุ่ม Filter
+    function filterHeroes(role) {
+        // อัปเดตสีปุ่ม
+        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+        
+        // ซ่อนหน้าต่างข้อมูล
+        document.getElementById('matchupContainer').classList.remove('active');
+        
+        renderHeroes(role);
+    }
+
+    // ฟังก์ชันเมื่อคลิกเลือกฮีโร่
+    function selectHero(id) {
+        // อัปเดตสถานะการเลือก (Highlight)
+        document.querySelectorAll('.hero-card').forEach(card => card.classList.remove('selected'));
+        document.getElementById(`hero-${id}`).classList.add('selected');
+
+        const hero = heroesData.find(h => h.id === id);
+        if(!hero) return;
+
+        // ดึงข้อมูลมาแสดงผล
+        const strongList = document.getElementById('strongList');
+        const weakList = document.getElementById('weakList');
+        
+        strongList.innerHTML = hero.strong.length ? hero.strong.map(c => `
+            <div class="counter-item">
+                <div class="counter-name">${c.name}</div>
+                <div class="counter-reason">${c.reason}</div>
+            </div>
+        `).join('') : '<div class="counter-reason">ไม่มีข้อมูลเด่นชัด</div>';
+
+        weakList.innerHTML = hero.weak.length ? hero.weak.map(c => `
+            <div class="counter-item">
+                <div class="counter-name">${c.name}</div>
+                <div class="counter-reason">${c.reason}</div>
+            </div>
+        `).join('') : '<div class="counter-reason">ไม่มีข้อมูลเด่นชัด</div>';
+
+        // แสดงหน้าต่าง
+        document.getElementById('matchupContainer').classList.add('active');
+    }
+
+    // โหลดครั้งแรกเมื่อเปิดหน้าเว็บ
+    renderHeroes('All');
+</script>
+
+</body>
+</html>
