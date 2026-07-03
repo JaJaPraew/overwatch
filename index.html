@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> OVERWATCH </title>
+    <title>OW2 Counters 💙</title>
+    <!-- นำเข้าฟอนต์น่ารักๆ จาก Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Itim&family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -29,7 +30,7 @@
 
         .app-card {
             background-color: var(--bg-card);
-            max-width: 900px;
+            max-width: 950px;
             width: 100%;
             border-radius: 30px;
             padding: 40px;
@@ -102,7 +103,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 140px; /* บังคับความสูงขั้นต่ำ ไม่ให้การ์ดแบน */
+            min-height: 140px; 
             justify-content: center;
         }
 
@@ -119,7 +120,6 @@
             transform: translateY(-5px);
         }
 
-        /* กล่องใส่รูป หรือตัวอักษรแทนรูป */
         .hero-avatar-box {
             width: 80px;
             height: 80px;
@@ -134,6 +134,7 @@
             font-family: 'Itim', cursive;
             font-size: 2.5em;
             color: #94a3b8;
+            position: relative;
         }
 
         .hero-img {
@@ -141,7 +142,10 @@
             height: 100%;
             object-fit: cover;
             object-position: top;
-            display: block; /* เริ่มต้นแสดงผลรูปปกติ */
+            display: block; 
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
         .hero-name {
@@ -214,6 +218,7 @@
             font-size: 0.8em;
             font-weight: bold;
             overflow: hidden;
+            position: relative;
         }
 
         .counter-img-mini {
@@ -221,6 +226,9 @@
             height: 100%;
             object-fit: cover;
             object-position: top;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
         
         .footer {
@@ -234,13 +242,14 @@
 <body>
 
 <div class="app-card">
-    <h1> OVERWATCH </h1>
+    <h1>OW2 Counter Picker 💙</h1>
     <div class="subtitle">เช็คตัวแก้ทางแพทช์ล่าสุด (SEA Meta)</div>
     
     <div class="filters" id="filters">
         <button class="filter-btn active" onclick="filterHeroes('All')">ทั้งหมด</button>
         <button class="filter-btn" onclick="filterHeroes('Tank')">Tank</button>
         <button class="filter-btn" onclick="filterHeroes('Damage')">Damage</button>
+        <button class="filter-btn" onclick="filterHeroes('Support')">Support</button>
     </div>
 
     <div class="hero-grid" id="heroGrid">
@@ -260,54 +269,28 @@
 </div>
 
 <script>
-    // ดึงรูปภาพจาก GitHub ที่มีคนรวบรวมรูปภาพไอคอนไว้ (มีความเสถียรสูงกว่า)
+    // URL ดึงรูปภาพจาก GitHub ที่มีความเสถียร
     const imgBaseUrl = "https://raw.githubusercontent.com/overwatch-api/overwatch-api/master/src/assets/heroes/";
     
-    // ข้อมูลชื่อไฟล์รูปภาพ (เป็นชื่อภาษาอังกฤษตัวพิมพ์เล็กติดกัน)
+    // ข้อมูลชื่อไฟล์รูปภาพ
     const imgMap = {
-        'D.Va': 'dva',
-        'Doomfist': 'doomfist',
-        'Orisa': 'orisa',
-        'Ramattra': 'ramattra',
-        'Reinhardt': 'reinhardt',
-        'Roadhog': 'roadhog',
-        'Sigma': 'sigma',
-        'Winston': 'winston',
-        'Wrecking Ball': 'wrecking-ball',
-        'Zarya': 'zarya',
-        'Mauga': 'mauga',
+        'D.Va': 'dva', 'Doomfist': 'doomfist', 'Orisa': 'orisa', 'Ramattra': 'ramattra',
+        'Reinhardt': 'reinhardt', 'Roadhog': 'roadhog', 'Sigma': 'sigma', 'Winston': 'winston',
+        'Wrecking Ball': 'wrecking-ball', 'Zarya': 'zarya', 'Junker Queen': 'junker-queen', 'Mauga': 'mauga',
         
-        'Tracer': 'tracer',
-        'Sojourn': 'sojourn',
-        'Soldier: 76': 'soldier-76',
-        'Cassidy': 'cassidy',
-        'Reaper': 'reaper',
-        'Pharah': 'pharah',
-        'Echo': 'echo',
-        'Sombra': 'sombra',
-        'Mei': 'mei',
-        'Junkrat': 'junkrat',
-        'Torbjörn': 'torbjorn',
-        'Hanzo': 'hanzo',
-        'Widowmaker': 'widowmaker',
-        'Ashe': 'ashe',
-        'Bastion': 'bastion',
-        'Symmetra': 'symmetra',
-        'Genji': 'genji',
+        'Tracer': 'tracer', 'Sojourn': 'sojourn', 'Soldier: 76': 'soldier-76', 'Cassidy': 'cassidy',
+        'Reaper': 'reaper', 'Pharah': 'pharah', 'Echo': 'echo', 'Sombra': 'sombra', 'Mei': 'mei',
+        'Junkrat': 'junkrat', 'Torbjörn': 'torbjorn', 'Hanzo': 'hanzo', 'Widowmaker': 'widowmaker',
+        'Ashe': 'ashe', 'Bastion': 'bastion', 'Symmetra': 'symmetra', 'Genji': 'genji',
         
-        'Ana': 'ana',
-        'Zenyatta': 'zenyatta',
-        'Brigitte': 'brigitte',
-        'Lifeweaver': 'lifeweaver',
-        'Kiriko': 'kiriko',
-        'Moira': 'moira',
-        'Illari': 'illari',
-        'Baptiste': 'baptiste',
-        'Lucio': 'lucio',
-        'Mercy': 'mercy'
+        'Ana': 'ana', 'Baptiste': 'baptiste', 'Brigitte': 'brigitte', 'Illari': 'illari',
+        'Kiriko': 'kiriko', 'Lifeweaver': 'lifeweaver', 'Lúcio': 'lucio', 'Mercy': 'mercy',
+        'Moira': 'moira', 'Zenyatta': 'zenyatta'
     };
 
+    // ฐานข้อมูลฮีโร่แบบ Full Option (Tank, Damage, Support + ฮีโร่ใหม่)
     const heroesData = [
+        // --- TANK ---
         { id: 'dva', name: 'D.Va', role: 'Tank', counters: ['Zarya', 'Roadhog', 'Symmetra', 'Mei', 'Sombra', 'Brigitte'] },
         { id: 'doomfist', name: 'Doomfist', role: 'Tank', counters: ['Orisa', 'Roadhog', 'Zarya', 'Cassidy', 'Sombra', 'Junkrat', 'Mei', 'Ana', 'Brigitte'] },
         { id: 'orisa', name: 'Orisa', role: 'Tank', counters: ['Zarya', 'Roadhog', 'Symmetra', 'Bastion', 'Echo', 'Zenyatta'] },
@@ -318,6 +301,12 @@
         { id: 'winston', name: 'Winston', role: 'Tank', counters: ['D.Va', 'Roadhog', 'Mauga', 'Reaper', 'Bastion', 'Torbjorn', 'Brigitte'] },
         { id: 'wreckingball', name: 'Wrecking Ball', role: 'Tank', counters: ['Roadhog', 'Mauga', 'Sombra', 'Mei', 'Cassidy', 'Brigitte'] },
         { id: 'zarya', name: 'Zarya', role: 'Tank', counters: ['Reinhardt', 'Ramattra', 'Winston', 'Bastion', 'Pharah', 'Widowmaker', 'Lifeweaver'] },
+        { id: 'junkerqueen', name: 'Junker Queen', role: 'Tank', counters: ['Orisa', 'Zarya', 'Ramattra', 'Sojourn', 'Brigitte', 'Symmetra', 'Mei', 'Junkrat', 'Kiriko', 'Lifeweaver'] },
+        { id: 'mauga', name: 'Mauga', role: 'Tank', counters: ['D.Va', 'Sojourn', 'Bastion', 'Junkrat', 'Hanzo', 'Mei', 'Echo', 'Ana', 'Zenyatta', 'Lifeweaver'] },
+        { id: 'domina', name: 'Domina', role: 'Tank', counters: ['Reinhardt', 'Ramattra', 'Mauga', 'Sojourn', 'Bastion', 'Symmetra', 'Reaper', 'Hanzo', 'Kiriko', 'Zenyatta'] },
+        { id: 'hazard', name: 'Hazard', role: 'Tank', counters: ['Orisa', 'Roadhog', 'Mauga', 'Zarya', 'Sigma', 'D.Va', 'Symmetra', 'Bastion', 'Cassidy', 'Torbjorn', 'Sombra', 'Junkrat', 'Zenyatta', 'Ana', 'Brigitte', 'Mizuki', 'Lifeweaver'] },
+
+        // --- DAMAGE ---
         { id: 'tracer', name: 'Tracer', role: 'Damage', counters: ['Zarya', 'Cassidy', 'Echo', 'Pharah', 'Reaper', 'Sombra', 'Brigitte'] },
         { id: 'sojourn', name: 'Sojourn', role: 'Damage', counters: ['Zarya', 'Winston', 'D.Va', 'Doomfist'] },
         { id: 'soldier76', name: 'Soldier: 76', role: 'Damage', counters: ['Winston', 'D.Va', 'Tracer', 'Cassidy', 'Pharah', 'Reaper'] },
@@ -334,14 +323,27 @@
         { id: 'ashe', name: 'Ashe', role: 'Damage', counters: ['Winston', 'D.Va', 'Widowmaker', 'Tracer', 'Genji'] },
         { id: 'bastion', name: 'Bastion', role: 'Damage', counters: ['Genji', 'Sigma', 'D.Va', 'Hanzo', 'Ana', 'Sombra'] },
         { id: 'symmetra', name: 'Symmetra', role: 'Damage', counters: ['Winston', 'Pharah', 'Echo', 'Junkrat', 'Widowmaker'] },
-        { id: 'genji', name: 'Genji', role: 'Damage', counters: ['Winston', 'Zarya', 'Symmetra', 'Mei', 'Moira', 'Pharah'] }
+        { id: 'genji', name: 'Genji', role: 'Damage', counters: ['Winston', 'Zarya', 'Symmetra', 'Mei', 'Moira', 'Pharah'] },
+        { id: 'venture', name: 'Venture', role: 'Damage', counters: ['Pharah', 'Sombra', 'Cassidy', 'Torbjorn'] },
+
+        // --- SUPPORT ---
+        { id: 'ana', name: 'Ana', role: 'Support', counters: ['Kiriko', 'D.Va', 'Genji', 'Tracer', 'Sombra', 'Winston', 'Doomfist'] },
+        { id: 'baptiste', name: 'Baptiste', role: 'Support', counters: ['Sombra', 'Doomfist', 'D.Va', 'Genji', 'Tracer', 'Wrecking Ball', 'Pharah'] },
+        { id: 'brigitte', name: 'Brigitte', role: 'Support', counters: ['Pharah', 'Bastion', 'Junkrat', 'Echo', 'Ramattra', 'Winston'] },
+        { id: 'illari', name: 'Illari', role: 'Support', counters: ['D.Va', 'Sombra', 'Tracer', 'Genji', 'Winston'] },
+        { id: 'kiriko', name: 'Kiriko', role: 'Support', counters: ['Tracer', 'Sombra', 'Winston', 'Genji', 'Doomfist'] },
+        { id: 'lifeweaver', name: 'Lifeweaver', role: 'Support', counters: ['Sombra', 'Widowmaker', 'Tracer', 'Genji', 'Winston', 'D.Va'] },
+        { id: 'lucio', name: 'Lúcio', role: 'Support', counters: ['Sombra', 'Cassidy', 'Torbjorn', 'Mei', 'Symmetra', 'Winston', 'Moira'] },
+        { id: 'mercy', name: 'Mercy', role: 'Support', counters: ['Widowmaker', 'Soldier: 76', 'Cassidy', 'Ashe', 'Winston', 'D.Va', 'Sombra', 'Tracer'] },
+        { id: 'moira', name: 'Moira', role: 'Support', counters: ['D.Va', 'Widowmaker', 'Ana', 'Roadhog', 'Sombra'] },
+        { id: 'zenyatta', name: 'Zenyatta', role: 'Support', counters: ['Sombra', 'Tracer', 'Genji', 'Winston', 'Doomfist', 'D.Va', 'Widowmaker', 'Reaper'] }
     ];
 
     function getHeroImage(heroName) {
         if(imgMap[heroName]) {
             return `${imgBaseUrl}${imgMap[heroName]}/icon.png`;
         }
-        return ''; // ปล่อยว่างถ้าไม่มีรูป
+        return ''; 
     }
 
     function renderHeroes(filterValue) {
@@ -361,11 +363,10 @@
             const imgSrc = getHeroImage(hero.name);
             const firstLetter = hero.name.charAt(0);
             
-            // ถ้าโหลดรูปพัง (onerror) ให้ซ่อนรูป(display:none) แล้วจะเหลือแต่ตัวอักษรน่ารักๆ แทน
             card.innerHTML = `
                 <div class="hero-avatar-box">
                     ${firstLetter}
-                    <img src="${imgSrc}" alt="${hero.name}" class="hero-img" style="position:absolute; width:80px; height:80px;" onerror="this.style.display='none'">
+                    <img src="${imgSrc}" alt="${hero.name}" class="hero-img" onerror="this.style.display='none'">
                 </div>
                 <div class="hero-name">${hero.name}</div>
                 <div class="hero-role">${hero.role}</div>
@@ -398,7 +399,7 @@
                 <div class="counter-tag">
                     <div class="counter-avatar-mini">
                         ${firstLetter}
-                        <img src="${imgSrc}" class="counter-img-mini" style="position:absolute; width:24px; height:24px;" onerror="this.style.display='none'">
+                        <img src="${imgSrc}" class="counter-img-mini" onerror="this.style.display='none'">
                     </div>
                     ${name}
                 </div>`;
@@ -407,6 +408,7 @@
         document.getElementById('matchupContainer').classList.add('active');
     }
 
+    // โหลดข้อมูลทั้งหมดเมื่อเปิดเว็บ
     renderHeroes('All');
 </script>
 
