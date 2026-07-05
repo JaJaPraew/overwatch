@@ -332,25 +332,23 @@
     heroesData.sort((a, b) => a.name.localeCompare(b.name));
 
     // ฟังก์ชันดึงรูปจากโฟลเดอร์ images ในเว็บของคุณเอง
-function getHeroImage(heroName) {
-        if (!heroName) return './images/default.png';
-        
-        let name = heroName.toLowerCase();
-        // แก้ไขเคสพิเศษที่มักเจอปัญหา
-        const specialCases = {
-            'lúcio': 'lucio',
-            'soldier: 76': 'soldier76',
-            'soldier 76': 'soldier76',
-            'jetpack cat': 'jetpackcat',
-            'junker queen': 'junkerqueen',
-            'wrecking ball': 'wreckingball'
+   function getHeroImage(heroName) {
+        // บังคับเปลี่ยนชื่อให้แน่ชัด
+        const customNames = {
+            'Lúcio': 'lucio',
+            'Soldier: 76': 'soldier76'
         };
 
-        if (specialCases[name]) return `./images/${specialCases[name]}.png`;
-
-        // แปลงชื่อทั่วไปให้เป็นไฟล์ (ลบอักขระพิเศษ เว้นวรรค และจุด)
-        let fileName = name.replace(/[\s:.]/g, '').replace('ú', 'u');
-        return `./images/${fileName}.png`;
+        let fileName = customNames[heroName];
+        
+        if (!fileName) {
+            // ลบจุดและแปลงอักขระพิเศษออก
+            fileName = heroName.toLowerCase()
+                               .replace('ú', 'u') 
+                               .replace(/[\s:.]/g, '');
+        }
+        
+        return `./images/${fileName}.png`; 
     }
     function renderHeroes(filterValue) {
         const grid = document.getElementById('heroGrid');
