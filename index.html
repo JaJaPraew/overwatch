@@ -269,10 +269,9 @@
 </div>
 
 <script>
-    // URL ดึงรูปภาพจาก GitHub ที่มีความเสถียร
+    // URL ดึงรูปภาพ
     const imgBaseUrl = "https://raw.githubusercontent.com/overwatch-api/overwatch-api/master/src/assets/heroes/";
     
-    // ข้อมูลชื่อไฟล์รูปภาพ
     const imgMap = {
         'D.Va': 'dva', 'Doomfist': 'doomfist', 'Orisa': 'orisa', 'Ramattra': 'ramattra',
         'Reinhardt': 'reinhardt', 'Roadhog': 'roadhog', 'Sigma': 'sigma', 'Winston': 'winston',
@@ -288,7 +287,7 @@
         'Moira': 'moira', 'Zenyatta': 'zenyatta'
     };
 
-    // ฐานข้อมูลฮีโร่แบบ Full Option (Tank, Damage, Support + ฮีโร่ใหม่)
+    // ฐานข้อมูลฮีโร่ อัปเดตครบทุกตัว (มีมาวกาและซัพพอร์ตแน่นอน!)
     const heroesData = [
         // --- TANK ---
         { id: 'dva', name: 'D.Va', role: 'Tank', counters: ['Zarya', 'Roadhog', 'Symmetra', 'Mei', 'Sombra', 'Brigitte'] },
@@ -343,7 +342,7 @@
         if(imgMap[heroName]) {
             return `${imgBaseUrl}${imgMap[heroName]}/icon.png`;
         }
-        return ''; 
+        return 'https://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif'; 
     }
 
     function renderHeroes(filterValue) {
@@ -408,7 +407,6 @@
         document.getElementById('matchupContainer').classList.add('active');
     }
 
-    // โหลดข้อมูลทั้งหมดเมื่อเปิดเว็บ
     renderHeroes('All');
 </script>
 
