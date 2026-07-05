@@ -269,39 +269,11 @@
 </div>
 
 <script>
-    // รหัสรูปภาพตรงจากเซิร์ฟเวอร์ Blizzard (ไม่มีทางโดนบล็อก)
-    const imgMap = {
-        'D.Va': 'blt7a7cb1de0746617f', 'Doomfist': 'bltb610eb6774dd0b5d', 'Orisa': 'blt8ba758778f56e9c9', 
-        'Ramattra': 'bltb2e226e64c391782', 'Reinhardt': 'bltb3f28cfcffbafb96', 'Roadhog': 'blt0a7905d4e132c324', 
-        'Sigma': 'blt2b1c21ad9adad5ad', 'Winston': 'blt4a4341c30467c699', 'Wrecking Ball': 'blt784aee96a6058e17', 
-        'Zarya': 'blteba49463c2c153cb', 'Junker Queen': 'blt61c6b1a8d0b50302', 'Mauga': 'blta2f09baafcc68ab1',
-        
-        'Tracer': 'bltcdd1ba5c678a3c89', 'Sojourn': 'blt5cefbde4a66e60b1', 'Soldier: 76': 'blta53664d9db3eb9cd', 
-        'Cassidy': 'blta9ec19ef6d0e808e', 'Reaper': 'blta6cb9e3bb827372d', 'Pharah': 'blteecf868c2eeabfe6', 
-        'Echo': 'bltd2d1d0337c767425', 'Sombra': 'blt73499406085a850e', 'Mei': 'blt2a94630a9e7d4db5',
-        'Junkrat': 'bltcdafcb0416cd6cf3', 'Torbjörn': 'blt78b3ce3c85aeb3f7', 'Hanzo': 'blt674c1ddf2c25bc8b', 
-        'Widowmaker': 'bltb1f17e0b57e7eb15', 'Ashe': 'bltdbc45398a6ff67be', 'Bastion': 'blt298e3b33dcd3e143', 
-        'Symmetra': 'blt6a5f7f3ff0606bde', 'Genji': 'bltb0b24dc6c99c9ca3', 'Venture': 'blt2c640eaf5e2fc2d3',
-        
-        'Ana': 'blt97801be9c7d41334', 'Baptiste': 'blt74f5d214697ffc64', 'Brigitte': 'bltdb8c3d4ecfbab696', 
-        'Illari': 'blt7e0d65b741007823', 'Kiriko': 'bltd09a25b1632f1ed7', 'Lifeweaver': 'blte8e6d15b13b735c9', 
-        'Lúcio': 'blt89da44256eb269fa', 'Mercy': 'blt6f1207e3a9c7303c', 'Moira': 'bltcd9a613247c4566c', 
-        'Zenyatta': 'bltb0a18413fb5eb65f', 'Juno': 'blt6b372f6a971217e6'
-    };
-
-    function getHeroImage(heroName) {
-        if(imgMap[heroName]) {
-            return `https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/${imgMap[heroName]}/62fc1d0f5ee7152069b2d8fb/Hero_Portrait.png`;
-        }
-        return ''; // ปล่อยว่างไว้ให้ระบบโชว์ตัวอักษรแทน (สำหรับฮีโร่ใหม่ที่ยังไม่มีรูป)
-    }
-
-    // ฐานข้อมูลฮีโร่ Full Option (ครบทุกตัว รวมถึงตัวใหม่ของปี 2026)
     const heroesData = [
         // --- TANK ---
-        { id: 'dva', name: 'D.Va', role: 'Tank', counters: ['Zarya', 'Symmetra', 'Mei', 'Sombra', 'Brigitte'] },
-        { id: 'doomfist', name: 'Doomfist', role: 'Tank', counters: ['Orisa', 'Roadhog', 'Zarya', 'Cassidy', 'Sombra', 'Junkrat', 'Mei', 'Ana', 'Brigitte'] },
         { id: 'domina', name: 'Domina', role: 'Tank', counters: ['Reinhardt', 'Ramattra', 'Mauga', 'Sojourn', 'Bastion', 'Symmetra', 'Reaper', 'Hanzo', 'Kiriko', 'Zenyatta'] },
+        { id: 'doomfist', name: 'Doomfist', role: 'Tank', counters: ['Orisa', 'Roadhog', 'Zarya', 'Cassidy', 'Sombra', 'Junkrat', 'Mei', 'Ana', 'Brigitte'] },
+        { id: 'dva', name: 'D.Va', role: 'Tank', counters: ['Zarya', 'Symmetra', 'Mei', 'Sombra', 'Brigitte'] },
         { id: 'hazard', name: 'Hazard', role: 'Tank', counters: ['Orisa', 'Roadhog', 'Mauga', 'Zarya', 'Sigma', 'D.Va', 'Symmetra', 'Bastion', 'Cassidy', 'Torbjörn', 'Sombra', 'Junkrat', 'Zenyatta', 'Ana', 'Brigitte', 'Mizuki', 'Lifeweaver'] },
         { id: 'junkerqueen', name: 'Junker Queen', role: 'Tank', counters: ['Orisa', 'Zarya', 'Ramattra', 'Sojourn', 'Brigitte', 'Symmetra', 'Mei', 'Junkrat', 'Kiriko', 'Lifeweaver'] },
         { id: 'mauga', name: 'Mauga', role: 'Tank', counters: ['D.Va', 'Sojourn', 'Bastion', 'Junkrat', 'Hanzo', 'Mei', 'Echo', 'Ana', 'Zenyatta', 'Lifeweaver', 'Sigma', 'Kiriko', 'Sombra'] },
@@ -356,12 +328,32 @@
         { id: 'zenyatta', name: 'Zenyatta', role: 'Support', counters: ['Sombra', 'Tracer', 'Genji', 'Winston', 'Doomfist', 'D.Va', 'Widowmaker', 'Reaper', 'Junker Queen', 'Zarya'] }
     ];
 
+    // คำสั่งสำหรับเรียงลำดับฮีโร่ทั้งหมดจาก A-Z
+    heroesData.sort((a, b) => a.name.localeCompare(b.name));
+
+    // ฟังก์ชันดึงรูปจากโฟลเดอร์ images ในเว็บของคุณเอง
+    function getHeroImage(heroName) {
+        // --- ส่วนกำหนดชื่อไฟล์รูปภาพแบบเฉพาะเจาะจง ---
+        const customNames = {
+            'Soldier: 76': 'Soldier76', // แสดงผลชื่อ Soldier: 76 แต่ดึงไฟล์ Soldier76.png
+        };
+
+        let fileName = customNames[heroName];
+        
+        // ถ้าไม่ได้ระบุไว้ด้านบน จะใช้ชื่อฮีโร่แปลงเป็นตัวพิมพ์เล็กและตัดช่องว่าง/สัญลักษณ์ออกโดยอัตโนมัติ
+        if (!fileName) {
+            fileName = heroName.toLowerCase().replace(/[\s:.]/g, '').replace('ú', 'u');
+        }
+        
+        return `./images/${fileName}.png`; 
+    }
+
     function renderHeroes(filterValue) {
         const grid = document.getElementById('heroGrid');
         grid.innerHTML = ''; 
         
-        const filtered = filterValue === 'All' 
-            ? heroesData 
+        let filtered = filterValue === 'All' 
+            ? [...heroesData] 
             : heroesData.filter(h => h.role === filterValue);
 
         filtered.forEach(hero => {
@@ -401,7 +393,10 @@
 
         const weakList = document.getElementById('weakList');
         
-        weakList.innerHTML = hero.counters.length ? hero.counters.map(name => {
+        // เรียงรายชื่อตัวแก้ทางจาก A-Z ด้วยเช่นกัน
+        let sortedCounters = [...hero.counters].sort((a, b) => a.localeCompare(b));
+
+        weakList.innerHTML = sortedCounters.length ? sortedCounters.map(name => {
             const imgSrc = getHeroImage(name);
             const firstLetter = name.charAt(0);
             
