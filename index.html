@@ -332,22 +332,24 @@
     heroesData.sort((a, b) => a.name.localeCompare(b.name));
 
     // ฟังก์ชันดึงรูปจากโฟลเดอร์ images ในเว็บของคุณเอง
-    function getHeroImage(heroName) {
-        // --- ส่วนกำหนดชื่อไฟล์รูปภาพแบบเฉพาะเจาะจง ---
+   function getHeroImage(heroName) {
+        // บังคับเปลี่ยนชื่อให้แน่ชัด
         const customNames = {
-            'Soldier: 76': 'Soldier76', // แสดงผลชื่อ Soldier: 76 แต่ดึงไฟล์ Soldier76.png
+            'Lúcio': 'lucio',
+            'Soldier: 76': 'soldier76'
         };
 
         let fileName = customNames[heroName];
         
-        // ถ้าไม่ได้ระบุไว้ด้านบน จะใช้ชื่อฮีโร่แปลงเป็นตัวพิมพ์เล็กและตัดช่องว่าง/สัญลักษณ์ออกโดยอัตโนมัติ
         if (!fileName) {
-            fileName = heroName.toLowerCase().replace(/[\s:.]/g, '').replace('ú', 'u');
+            // ลบจุดและแปลงอักขระพิเศษออก
+            fileName = heroName.toLowerCase()
+                               .replace('ú', 'u') 
+                               .replace(/[\s:.]/g, '');
         }
         
         return `./images/${fileName}.png`; 
     }
-
     function renderHeroes(filterValue) {
         const grid = document.getElementById('heroGrid');
         grid.innerHTML = ''; 
