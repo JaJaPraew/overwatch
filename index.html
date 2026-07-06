@@ -237,6 +237,29 @@
             color: #cbd5e1;
             font-family: 'Kanit', sans-serif;
         }
+        /* สำหรับ iPhone และหน้าจอขนาดเล็ก */
+@media screen and (max-width: 600px) {
+    .app-card {
+        padding: 20px 10px; /* ลดระยะขอบให้เหลือพื้นที่แสดงผลมากขึ้น */
+        border-radius: 20px;
+    }
+    h1 {
+        font-size: 2em; /* ลดขนาดหัวข้อลงให้พอดีหน้าจอ */
+    }
+    .hero-grid {
+        grid-template-columns: repeat(4, 1fr); /* ปรับให้แสดงฮีโร่เป็น 4 คอลัมน์ต่อแถว */
+        gap: 10px;
+    }
+    .hero-avatar-box {
+        width: 60px;
+        height: 60px; /* ย่อขนาดกล่องรูปภาพให้เหมาะกับการกดด้วยนิ้ว */
+        border-radius: 15px;
+    }
+    .hero-card {
+        padding: 10px 5px;
+        font-size: 0.8em;
+    }
+}
     </style>
 </head>
 <body>
